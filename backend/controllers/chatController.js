@@ -23,6 +23,7 @@ export async function chatWithAI(req, res) {
     const response = completion.choices[0].message.content;
     res.json({ response });
   } catch (err) {
+    console.error("Error calling OpenAI API:", err);
     res.status(500).json({ error: "AI error", details: err.message });
   }
-} 
+}
