@@ -244,21 +244,22 @@ export default function ChatWidget({
   };
 
   return (
-    <Card className="w-full max-w-xs sm:max-w-md md:max-w-2xl h-screen flex flex-col md:h-[85vh] md:max-h-[900px] md:rounded-xl md:shadow-2xl">
-      <CardHeader className="flex flex-row items-center justify-between p-2 sm:p-4 border-b">
+    <Card className="w-full max-w-xs sm:max-w-md md:max-w-2xl h-screen flex flex-col md:h-[85vh] md:max-h-[900px] md:rounded-2xl md:shadow-2xl bg-gradient-to-br from-white to-blue-50 dark:from-gray-900 dark:to-gray-800 border-0">
+      <CardHeader className="flex flex-row items-center justify-between p-2 sm:p-4 border-b bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-t-2xl">
         <div className="flex items-center space-x-2 sm:space-x-3">
-          <Button variant="ghost" size="icon" onClick={() => onBack()}>
+          <Button variant="ghost" size="icon" onClick={() => onBack()} className="hover:bg-blue-100 dark:hover:bg-gray-800">
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="text-3xl sm:text-4xl">{character.emoji}</div>
           <div>
-            <CardTitle className="text-lg sm:text-xl">{character.name}</CardTitle>
+            <CardTitle className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">{character.name}</CardTitle>
+            <div className="text-xs text-gray-500 dark:text-gray-400">{character.subject} Tutor</div>
           </div>
         </div>
         <div className="flex items-center space-x-1">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" title="Past Assignments">
+              <Button variant="ghost" size="icon" title="Past Assignments" className="hover:bg-blue-100 dark:hover:bg-gray-800">
                 <History className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>
@@ -270,50 +271,48 @@ export default function ChatWidget({
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="ghost" size="icon" onClick={handleNewChat} title="New Assignment">
+          <Button variant="ghost" size="icon" onClick={handleNewChat} title="New Assignment" className="hover:bg-blue-100 dark:hover:bg-gray-800">
             <PlusCircle className="h-5 w-5" />
           </Button>
         </div>
       </CardHeader>
       <CardContent className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-4">
-          <AnimatePresence>
-            {activeSession?.messages.map((msg, i) => {
-              // Check if this message is from a different day than the previous one
-              const showDateSeparator = i > 0 && 
-                new Date(msg.timestamp || Date.now()).toDateString() !== 
-                new Date(activeSession.messages[i-1].timestamp || Date.now()).toDateString();
-              
-              return (
-                <React.Fragment key={i}>
-                  {showDateSeparator && (
-                    <div className="flex justify-center my-4">
-                      <div className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-full text-xs">
-                        {new Date(msg.timestamp || Date.now()).toLocaleDateString()}
-                      </div>
+        <AnimatePresence>
+          {activeSession?.messages.map((msg, i) => {
+            const showDateSeparator = i > 0 &&
+              new Date(msg.timestamp || Date.now()).toDateString() !==
+              new Date(activeSession.messages[i-1].timestamp || Date.now()).toDateString();
+            return (
+              <React.Fragment key={i}>
+                {showDateSeparator && (
+                  <div className="flex justify-center my-4">
+                    <div className="bg-blue-100 dark:bg-gray-700 px-3 py-1 rounded-full text-xs text-blue-700 dark:text-gray-200">
+                      {new Date(msg.timestamp || Date.now()).toLocaleDateString()}
                     </div>
-                  )}
-                  <MessageBubble 
-                    from={msg.from} 
-                    text={msg.text} 
-                    character={character}
-                    onSwitchCharacter={handleSwitchCharacter}
-                    fileName={msg.fileName}
-                    timestamp={msg.timestamp || Date.now()} // Add this line
-                  />
-                </React.Fragment>
-              );
-            })}
-            {loading && <TypingIndicator />}
-          </AnimatePresence>
-          <div ref={messagesEndRef} />
+                  </div>
+                )}
+                <MessageBubble 
+                  from={msg.from} 
+                  text={msg.text} 
+                  character={character}
+                  onSwitchCharacter={handleSwitchCharacter}
+                  fileName={msg.fileName}
+                  timestamp={msg.timestamp || Date.now()}
+                />
+              </React.Fragment>
+            );
+          })}
+          {loading && <TypingIndicator />}
+        </AnimatePresence>
+        <div ref={messagesEndRef} />
       </CardContent>
-      <CardFooter className="p-2 sm:p-4 border-t">
+      <CardFooter className="p-2 sm:p-4 border-t bg-white/80 dark:bg-gray-900/80 backdrop-blur-md rounded-b-2xl">
         <div className="flex flex-col w-full">
           {/* 3. Improved File Preview */}
           {file && (
-            <div className="mb-2 p-2 bg-muted rounded-lg flex items-center justify-between text-sm">
-              <span className="truncate pr-2">Attaching: {file.name}</span>
-              <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => setFile(null)}>
+            <div className="mb-2 p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-between text-sm">
+              <span className="truncate pr-2 text-blue-800 dark:text-blue-200">Attaching: {file.name}</span>
+              <Button variant="ghost" size="icon" className="h-6 w-6 text-blue-600 dark:text-blue-400" onClick={() => setFile(null)}>
                 <X className="h-4 w-4" />
               </Button>
             </div>
@@ -331,7 +330,7 @@ export default function ChatWidget({
               size="icon" 
               onClick={() => fileInputRef.current.click()}
               title="Attach file"
-              className="shrink-0"
+              className="shrink-0 hover:bg-blue-100 dark:hover:bg-gray-800"
             >
               <Paperclip className="h-5 w-5" />
             </Button>
@@ -341,11 +340,11 @@ export default function ChatWidget({
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Type your message..."
-              className="resize-none max-h-40 overflow-y-auto text-base sm:text-lg py-3"
+              className="resize-none max-h-40 overflow-y-auto text-base sm:text-lg py-3 px-4 border-2 focus:border-blue-500 dark:focus:border-blue-400 transition-colors"
               rows={1}
               disabled={loading}
             />
-            <Button onClick={sendMessage} disabled={loading || (!input.trim() && !file)} className="shrink-0 py-3 text-base sm:text-lg">
+            <Button onClick={sendMessage} disabled={loading || (!input.trim() && !file)} className="shrink-0 py-3 text-base sm:text-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200">
               Send
             </Button>
             <VoiceButton 

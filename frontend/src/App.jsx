@@ -93,19 +93,22 @@ export default function App() {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-2 sm:p-4">
-      <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300 flex items-center justify-center p-2 sm:p-4">
+      <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50">
         <Button
           variant="outline"
           size="icon"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-200"
         >
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </div>
-      <div className="w-full max-w-xs sm:max-w-md md:max-w-2xl">{renderContent()}</div>
+      <div className="w-full max-w-xs sm:max-w-md md:max-w-2xl">
+        {renderContent()}
+      </div>
     </div>
   );
 }

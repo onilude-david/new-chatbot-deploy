@@ -12,13 +12,14 @@ export function ThemeProvider({ children, defaultTheme = "system", storageKey = 
     const root = window.document.documentElement;
     root.classList.remove("light", "dark");
 
+    let appliedTheme = theme;
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      root.classList.add(systemTheme);
-      return;
+      appliedTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     }
+    root.classList.add(appliedTheme);
 
-    root.classList.add(theme);
+    // Optional: add a smooth transition for theme change
+    root.style.transition = "background-color 0.3s, color 0.3s";
   }, [theme]);
 
   const value = {

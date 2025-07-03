@@ -1,28 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Bot } from "lucide-react";
 
-// Define the animation for a single dot
 const bounceTransition = {
-  y: {
-    duration: 0.5,
-    repeat: Infinity,
-    repeatType: 'reverse',
-    ease: 'easeInOut',
-  },
-};
-
-// Define the parent container animation to orchestrate the dots
-const containerVariants = {
-  initial: {
-    transition: {
-      staggerChildren: 0.2, // Makes the dots start their animation one after another
-    },
-  },
-  animate: {
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
+  y: { duration: 0.6, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }
 };
 
 export default function TypingIndicator() {
@@ -32,32 +13,37 @@ export default function TypingIndicator() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
-      className="flex justify-start mb-2"
+      className="flex justify-start mb-4"
     >
-      <div className="bg-yellow-50 text-gray-800 border border-yellow-200 rounded-xl p-3">
-        <motion.div
-          className="flex justify-around items-center w-10 h-4"
-          variants={containerVariants}
-          initial="initial"
-          animate="animate"
-        >
-          {/* Create three dots that will bounce */}
-          <motion.span
-            className="block w-2 h-2 bg-current rounded-full"
-            variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
-            transition={bounceTransition}
-          />
-          <motion.span
-            className="block w-2 h-2 bg-current rounded-full"
-            variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
-            transition={bounceTransition}
-          />
-          <motion.span
-            className="block w-2 h-2 bg-current rounded-full"
-            variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
-            transition={bounceTransition}
-          />
-        </motion.div>
+      <div className="flex items-end space-x-2">
+        <div className="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center">
+          <Bot className="w-4 h-4 text-gray-800" />
+        </div>
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl rounded-bl-sm px-4 py-3">
+          <div className="flex items-center space-x-1">
+            <motion.span
+              className="block w-2 h-2 bg-gray-400 rounded-full"
+              variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
+              transition={bounceTransition}
+              initial="initial"
+              animate="animate"
+            />
+            <motion.span
+              className="block w-2 h-2 bg-gray-400 rounded-full"
+              variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
+              transition={{ ...bounceTransition, delay: 0.2 }}
+              initial="initial"
+              animate="animate"
+            />
+            <motion.span
+              className="block w-2 h-2 bg-gray-400 rounded-full"
+              variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
+              transition={{ ...bounceTransition, delay: 0.4 }}
+              initial="initial"
+              animate="animate"
+            />
+          </div>
+        </div>
       </div>
     </motion.div>
   );
