@@ -33,7 +33,7 @@ export default function WelcomeScreen({ onNameSubmit }) {
               🎓
             </motion.div>
             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Welcome!
+              Welcome To Lanter's Homework Helper!
             </CardTitle>
             <CardDescription className="text-sm text-gray-600 dark:text-gray-300">
               Please enter your first name to get started.
