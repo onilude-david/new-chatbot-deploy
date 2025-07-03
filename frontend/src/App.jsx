@@ -6,8 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { ThemeProviderContext } from "./components/ThemeProvider";
 
-// Use relative URL since Vite proxy forwards /api to backend
-const apiUrl = "";
+// Use environment variable for production, empty string for local development (proxy)
+const apiUrl = import.meta.env.VITE_API_URL || "";
 
 export default function App() {
   const [userName, setUserName] = useState(() => localStorage.getItem("userName") || null);

@@ -154,7 +154,7 @@ export default function ChatWidget({
         formData.append("file", file);
       }
 
-      const res = await fetch(`/api/chat`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/chat`, {
         method: "POST",
         body: formData,
       });
@@ -203,7 +203,7 @@ export default function ChatWidget({
       formData.append("history", JSON.stringify(updatedHistory));
       formData.append("userName", userName);
 
-      const res = await fetch(`/api/chat`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL || ""}/api/chat`, {
         method: "POST",
         body: formData,
       });
