@@ -63,6 +63,7 @@ export default function ChatWidget({
   const fileInputRef = useRef(null); // 3. Add a ref to trigger the file input
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null); // For auto-resizing
+  const [pendingAIText, setPendingAIText] = useState(""); // Buffer for streaming AI text
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -80,6 +81,25 @@ export default function ChatWidget({
     }
   }, [input]);
 
+  // Typing effect: reveal pendingAIText one character at a time
+  useEffect(() => {
+    if (!loading || !pendingAIText) return;
+    let timeout;
+    setMessages(currentMessages => {
+      const lastMessage = currentMessages[currentMessages.length - 1];
+      if (lastMessage.from !== "ai") return currentMessages;
+      // Reveal one more character
+      const nextChar = pendingAIText[0];
+      if (!nextChar) return currentMessages;
+      const updatedLastMessage = { ...lastMessage, text: lastMessage.text + nextChar };
+      timeout = setTimeout(() => {
+        setPendingAIText(pendingAIText.slice(1));
+      }, 18); // Adjust speed here (ms per character)
+      return [...currentMessages.slice(0, -1), updatedLastMessage];
+    });
+    return () => clearTimeout(timeout);
+  }, [pendingAIText, loading]);
+
   const handleNewChat = () => {
     // This function now creates a "New Assignment"
     const newAssignment = { id: Date.now(), messages: [{ from: "ai", text: `Okay, ${userName}! A fresh assignment. What would you like to work on?` }] };
@@ -89,72 +109,61 @@ export default function ChatWidget({
 
   const sendMessage = async () => {
     if ((!input.trim() && !file) || !activeSession) return;
-  
+
     const userMsg = { 
       from: "user", 
       text: input,
       fileName: file ? file.name : null,
-      timestamp: Date.now() // Add this line
+      timestamp: Date.now()
     };
-  
-    // Create the complete history that will be sent to the backend
+
     const updatedHistory = [...activeSession.messages, userMsg];
-  
-    // Update the UI immediately
-    setMessages(currentMessages => [...currentMessages, userMsg, { from: "ai", text: "", timestamp: Date.now() }]); // Add timestamp here too
-    const currentInput = input; // Save input before clearing
+
+    setMessages(currentMessages => [...currentMessages, userMsg, { from: "ai", text: "", timestamp: Date.now() }]);
     setInput("");
     setFile(null);
     setLoading(true);
-  
+    setPendingAIText(""); // Reset buffer
+
     try {
       const formData = new FormData();
-      // The 'message' field is no longer needed, as the message is now in the history
       formData.append("characterId", character.id);
-      formData.append("history", JSON.stringify(updatedHistory)); // Send the correct, updated history
+      formData.append("history", JSON.stringify(updatedHistory));
       formData.append("userName", userName);
       if (file) {
         formData.append("file", file);
       }
-  
+
       const apiUrl = import.meta.env.VITE_API_URL;
       const res = await fetch(`${apiUrl}/api/chat`, {
         method: "POST",
         body: formData,
       });
-  
+
       if (!res.ok) {
-        // Try to get more detailed error from the server response
         const errorBody = await res.json();
-        console.error("Server responded with an error:", errorBody);
         throw new Error(errorBody.error || "Failed to fetch response from server.");
       }
-  
+
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
-  
+
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
         const chunk = decoder.decode(value, { stream: true });
-        
-        setMessages(currentMessages => {
-          const lastMessage = currentMessages[currentMessages.length - 1];
-          const updatedLastMessage = { ...lastMessage, text: lastMessage.text + chunk };
-          return [...currentMessages.slice(0, -1), updatedLastMessage];
-        });
+        setPendingAIText(prev => prev + chunk); // Buffer the chunk for typing effect
       }
     } catch (e) {
       setMessages(msgs => {
         const newMessages = [...msgs];
         const lastMessage = newMessages[newMessages.length - 1];
-        // Update the UI with the specific error message
         lastMessage.text = `Sorry, I had trouble answering. Error: ${e.message}`;
         return newMessages;
       });
-      console.error(e);
     }
     setLoading(false);
+    setPendingAIText(""); // Clear buffer when done
   };
 
   const sendSpecificMessage = async (questionText) => {
@@ -302,7 +311,7 @@ export default function ChatWidget({
               </React.Fragment>
             );
           })}
-          {loading && <TypingIndicator />}
+          {loading && <TypingIndicator character={character} loading={loading} />}
         </AnimatePresence>
         <div ref={messagesEndRef} />
       </CardContent>

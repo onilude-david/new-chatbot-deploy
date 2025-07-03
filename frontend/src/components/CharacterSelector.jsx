@@ -1,8 +1,9 @@
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import TypingIndicator from "./TypingIndicator"; // Adjust the import based on your file structure
 
-export default function CharacterSelector({ characters, onSelect, userName }) {
+export default function CharacterSelector({ characters, onSelect, userName, loading, character }) {
   const handleKeyDown = (e, char) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -78,6 +79,7 @@ export default function CharacterSelector({ characters, onSelect, userName }) {
             </motion.div>
           ))}
         </motion.div>
+        {loading && <TypingIndicator character={character} loading={loading} />}
       </div>
     </motion.div>
   );
