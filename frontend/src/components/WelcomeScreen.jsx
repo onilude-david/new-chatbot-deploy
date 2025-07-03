@@ -14,11 +14,11 @@ export default function WelcomeScreen({ onNameSubmit }) {
   };
 
   return (
-    <Card className="w-full max-w-sm mx-auto">
+    <Card className="w-full max-w-xs sm:max-w-sm mx-auto p-4 sm:p-6">
       <form onSubmit={handleSubmit}>
         <CardHeader>
-          <CardTitle className="text-2xl">Welcome!</CardTitle>
-          <CardDescription>
+          <CardTitle className="text-xl sm:text-2xl text-center">Welcome!</CardTitle>
+          <CardDescription className="text-sm sm:text-base text-center">
             Please enter your first name to get started.
           </CardDescription>
         </CardHeader>
@@ -29,10 +29,11 @@ export default function WelcomeScreen({ onNameSubmit }) {
             onChange={(e) => setName(e.target.value)}
             required
             autoFocus
+            className="text-base sm:text-lg py-3"
           />
         </CardContent>
         <CardFooter>
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full py-3 text-base sm:text-lg">
             Let's Go!
           </Button>
         </CardFooter>

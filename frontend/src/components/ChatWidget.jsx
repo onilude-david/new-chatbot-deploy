@@ -244,7 +244,7 @@ export default function ChatWidget({
   };
 
   return (
-    <Card className="w-screen h-screen flex flex-col md:h-[85vh] md:max-h-[900px] md:max-w-2xl md:rounded-xl md:shadow-2xl">
+    <Card className="w-full max-w-md h-screen flex flex-col md:h-[85vh] md:max-h-[900px] md:max-w-2xl md:rounded-xl md:shadow-2xl">
       <CardHeader className="flex flex-row items-center justify-between p-4 border-b">
         <div className="flex items-center space-x-3">
           <Button variant="ghost" size="icon" onClick={() => onBack()}>
@@ -307,7 +307,7 @@ export default function ChatWidget({
           </AnimatePresence>
           <div ref={messagesEndRef} />
       </CardContent>
-      <CardFooter className="p-2 border-t md:p-4">
+      <CardFooter className="p-2 sm:p-4 border-t">
         <div className="flex flex-col w-full">
           {/* 3. Improved File Preview */}
           {file && (
@@ -341,11 +341,11 @@ export default function ChatWidget({
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Type your message..."
-              className="resize-none max-h-40 overflow-y-auto"
+              className="resize-none max-h-40 overflow-y-auto text-base sm:text-lg py-3"
               rows={1}
               disabled={loading}
             />
-            <Button onClick={sendMessage} disabled={loading || (!input.trim() && !file)} className="shrink-0">
+            <Button onClick={sendMessage} disabled={loading || (!input.trim() && !file)} className="shrink-0 py-3 text-base sm:text-lg">
               Send
             </Button>
             <VoiceButton 

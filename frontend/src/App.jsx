@@ -93,8 +93,8 @@ export default function App() {
   };
 
   return (
-    <div className="fixed inset-0 bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4">
-      <div className="absolute top-4 right-4">
+    <div className="fixed inset-0 bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-2 sm:p-4">
+      <div className="absolute top-2 right-2 sm:top-4 sm:right-4">
         <Button
           variant="outline"
           size="icon"
@@ -105,7 +105,7 @@ export default function App() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </div>
-      {renderContent()}
+      <div className="w-full max-w-md">{renderContent()}</div>
     </div>
   );
 }
