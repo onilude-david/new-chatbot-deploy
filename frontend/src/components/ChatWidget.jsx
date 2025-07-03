@@ -244,15 +244,15 @@ export default function ChatWidget({
   };
 
   return (
-    <Card className="w-full max-w-md h-screen flex flex-col md:h-[85vh] md:max-h-[900px] md:max-w-2xl md:rounded-xl md:shadow-2xl">
-      <CardHeader className="flex flex-row items-center justify-between p-4 border-b">
-        <div className="flex items-center space-x-3">
+    <Card className="w-full max-w-xs sm:max-w-md md:max-w-2xl h-screen flex flex-col md:h-[85vh] md:max-h-[900px] md:rounded-xl md:shadow-2xl">
+      <CardHeader className="flex flex-row items-center justify-between p-2 sm:p-4 border-b">
+        <div className="flex items-center space-x-2 sm:space-x-3">
           <Button variant="ghost" size="icon" onClick={() => onBack()}>
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <div className="text-4xl">{character.emoji}</div>
+          <div className="text-3xl sm:text-4xl">{character.emoji}</div>
           <div>
-            <CardTitle className="text-xl">{character.name}</CardTitle>
+            <CardTitle className="text-lg sm:text-xl">{character.name}</CardTitle>
           </div>
         </div>
         <div className="flex items-center space-x-1">
@@ -275,7 +275,7 @@ export default function ChatWidget({
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
+      <CardContent className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-4">
           <AnimatePresence>
             {activeSession?.messages.map((msg, i) => {
               // Check if this message is from a different day than the previous one

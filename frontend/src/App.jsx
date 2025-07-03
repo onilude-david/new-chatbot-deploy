@@ -105,7 +105,7 @@ export default function App() {
           <span className="sr-only">Toggle theme</span>
         </Button>
       </div>
-      <div className="w-full max-w-md">{renderContent()}</div>
+      <div className="w-full max-w-xs sm:max-w-md md:max-w-2xl">{renderContent()}</div>
     </div>
   );
 }

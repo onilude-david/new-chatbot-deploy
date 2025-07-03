@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Button } from './ui/button'; // Changed from "@/components/ui/button"
-import { Input } from './ui/input';   // Changed from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card'; // Changed from "@/components/ui/card"
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 
 export default function WelcomeScreen({ onNameSubmit }) {
   const [name, setName] = useState('');
@@ -14,11 +14,11 @@ export default function WelcomeScreen({ onNameSubmit }) {
   };
 
   return (
-    <Card className="w-full max-w-xs sm:max-w-sm mx-auto p-4 sm:p-6">
+    <Card className="w-full max-w-xs sm:max-w-sm md:max-w-md mx-auto p-3 sm:p-6 md:p-8">
       <form onSubmit={handleSubmit}>
         <CardHeader>
-          <CardTitle className="text-xl sm:text-2xl text-center">Welcome!</CardTitle>
-          <CardDescription className="text-sm sm:text-base text-center">
+          <CardTitle className="text-lg sm:text-xl md:text-2xl text-center">Welcome!</CardTitle>
+          <CardDescription className="text-xs sm:text-sm md:text-base text-center">
             Please enter your first name to get started.
           </CardDescription>
         </CardHeader>
