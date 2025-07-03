@@ -84,20 +84,23 @@ export default function ChatWidget({
   // Typing effect: reveal pendingAIText one character at a time
   useEffect(() => {
     if (!loading || !pendingAIText) return;
-    let timeout;
-    setMessages(currentMessages => {
-      const lastMessage = currentMessages[currentMessages.length - 1];
-      if (lastMessage.from !== "ai") return currentMessages;
-      // Reveal one more character
-      const nextChar = pendingAIText[0];
-      if (!nextChar) return currentMessages;
-      const updatedLastMessage = { ...lastMessage, text: lastMessage.text + nextChar };
-      timeout = setTimeout(() => {
-        setPendingAIText(pendingAIText.slice(1));
-      }, 18); // Adjust speed here (ms per character)
-      return [...currentMessages.slice(0, -1), updatedLastMessage];
-    });
+    const timeout = setTimeout(() => {
+      setMessages(currentMessages => {
+        const lastMessage = currentMessages[currentMessages.length - 1];
+        if (lastMessage.from !== "ai") return currentMessages;
+        const updatedLastMessage = { ...lastMessage, text: lastMessage.text + pendingAIText[0] };
+        return [...currentMessages.slice(0, -1), updatedLastMessage];
+      });
+      setPendingAIText(prev => prev.slice(1));
+    }, 18);
     return () => clearTimeout(timeout);
+  }, [pendingAIText, loading]);
+
+  // When pendingAIText is empty and loading, finish loading
+  useEffect(() => {
+    if (loading && pendingAIText === "") {
+      setLoading(false);
+    }
   }, [pendingAIText, loading]);
 
   const handleNewChat = () => {
