@@ -172,17 +172,17 @@ export default function ChatWidget({
   const sendSpecificMessage = async (questionText) => {
     if (!questionText.trim() || !activeSession) return;
     const userMsg = { from: "user", text: questionText };
-    
+
     // Use the same history logic as sendMessage
     const updatedHistory = [...activeSession.messages, userMsg];
 
     setMessages(msgs => [...msgs, userMsg, { from: "ai", text: "" }]);
     setLoading(true);
+    setPendingAIText(""); // Reset buffer
 
     try {
-      // This now sends FormData, just like the main sendMessage function
       const formData = new FormData();
-      formData.append("characterId", character.id); // <-- FIX: Was 'character'
+      formData.append("characterId", character.id);
       formData.append("history", JSON.stringify(updatedHistory));
       formData.append("userName", userName);
 
@@ -194,7 +194,6 @@ export default function ChatWidget({
 
       if (!res.ok) {
         const errorBody = await res.json();
-        console.error("Server responded with an error:", errorBody);
         throw new Error(errorBody.error || "Failed to fetch response from server.");
       }
 
@@ -205,12 +204,7 @@ export default function ChatWidget({
         const { done, value } = await reader.read();
         if (done) break;
         const chunk = decoder.decode(value, { stream: true });
-        
-        setMessages(currentMessages => {
-          const lastMessage = currentMessages[currentMessages.length - 1];
-          const updatedLastMessage = { ...lastMessage, text: lastMessage.text + chunk };
-          return [...currentMessages.slice(0, -1), updatedLastMessage];
-        });
+        setPendingAIText(prev => prev + chunk); // Buffer the chunk for typing effect
       }
     } catch (e) {
       setMessages(msgs => {
@@ -221,7 +215,7 @@ export default function ChatWidget({
       });
       console.error(e);
     }
-    setLoading(false);
+    // Do not setLoading(false) or setPendingAIText("") here; let the typing effect handle it.
   };
 
   useEffect(() => {
