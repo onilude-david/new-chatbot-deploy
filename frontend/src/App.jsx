@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { ThemeProviderContext } from "./components/ThemeProvider";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function App() {
   const [userName, setUserName] = useState(() => localStorage.getItem("userName") || null);
   const [characters, setCharacters] = useState([]);
@@ -16,7 +18,7 @@ export default function App() {
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const res = await fetch("/api/characters");
+        const res = await fetch(`${apiUrl}/api/characters`);
         if (!res.ok) throw new Error("Failed to fetch characters");
         const data = await res.json();
         setCharacters(data);
