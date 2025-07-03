@@ -21,28 +21,31 @@ export default function TypingIndicator({ character, loading }) {
           {character?.emoji || "🤖"}
         </div>
         <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl rounded-bl-sm px-4 py-3">
-          <div className="flex items-center space-x-1">
-            <motion.span
-              className="block w-2 h-2 bg-gray-400 rounded-full"
-              variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
-              transition={bounceTransition}
-              initial="initial"
-              animate="animate"
-            />
-            <motion.span
-              className="block w-2 h-2 bg-gray-400 rounded-full"
-              variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
-              transition={{ ...bounceTransition, delay: 0.2 }}
-              initial="initial"
-              animate="animate"
-            />
-            <motion.span
-              className="block w-2 h-2 bg-gray-400 rounded-full"
-              variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
-              transition={{ ...bounceTransition, delay: 0.4 }}
-              initial="initial"
-              animate="animate"
-            />
+          <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1">
+              <motion.span
+                className="block w-2 h-2 bg-gray-400 rounded-full"
+                variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
+                transition={bounceTransition}
+                initial="initial"
+                animate="animate"
+              />
+              <motion.span
+                className="block w-2 h-2 bg-gray-400 rounded-full"
+                variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
+                transition={{ ...bounceTransition, delay: 0.2 }}
+                initial="initial"
+                animate="animate"
+              />
+              <motion.span
+                className="block w-2 h-2 bg-gray-400 rounded-full"
+                variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
+                transition={{ ...bounceTransition, delay: 0.4 }}
+                initial="initial"
+                animate="animate"
+              />
+            </div>
+            <span className="text-xs text-gray-400 ml-2">typing…</span>
           </div>
         </div>
       </div>
