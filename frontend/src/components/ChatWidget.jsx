@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import MessageBubble from "./MessageBubble";
 import VoiceButton from "./VoiceButton";
 import TypingIndicator from './TypingIndicator';
@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { motion, AnimatePresence } from "framer-motion";
 import 'highlight.js/styles/github.css';
+
+const TYPING_SPEED = 30; // ms per character
 
 export default function ChatWidget({ 
   character, 
@@ -64,6 +66,8 @@ export default function ChatWidget({
   const messagesEndRef = useRef(null);
   const textareaRef = useRef(null); // For auto-resizing
   const [pendingAIText, setPendingAIText] = useState(""); // Buffer for streaming AI text
+  const [isAITyping, setIsAITyping] = useState(false);
+  const typingTimeout = useRef(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -83,18 +87,27 @@ export default function ChatWidget({
 
   // Typing effect: reveal pendingAIText one character at a time
   useEffect(() => {
-    if (!loading || !pendingAIText) return;
-    const timeout = setTimeout(() => {
-      setMessages(currentMessages => {
-        const lastMessage = currentMessages[currentMessages.length - 1];
-        if (lastMessage.from !== "ai") return currentMessages;
-        const updatedLastMessage = { ...lastMessage, text: lastMessage.text + pendingAIText[0] };
-        return [...currentMessages.slice(0, -1), updatedLastMessage];
-      });
-      setPendingAIText(prev => prev.slice(1));
-    }, 18);
-    return () => clearTimeout(timeout);
-  }, [pendingAIText, loading]);
+    if (pendingAIText.length > 0) {
+      setIsAITyping(true);
+      typingTimeout.current = setTimeout(() => {
+        setMessages((prev) => {
+          const lastMsg = prev[prev.length - 1];
+          if (!lastMsg || lastMsg.role !== "ai") return prev;
+          // Append next character to last AI message
+          const updated = [
+            ...prev.slice(0, -1),
+            { ...lastMsg, text: lastMsg.text + pendingAIText[0] },
+          ];
+          return updated;
+        });
+        setPendingAIText((t) => t.slice(1));
+      }, TYPING_SPEED);
+    } else {
+      setIsAITyping(false);
+      clearTimeout(typingTimeout.current);
+    }
+    return () => clearTimeout(typingTimeout.current);
+  }, [pendingAIText]);
 
   // When pendingAIText is empty and loading, finish loading
   useEffect(() => {
@@ -308,7 +321,7 @@ export default function ChatWidget({
               </React.Fragment>
             );
           })}
-          {loading && <TypingIndicator character={character} loading={loading} />}
+          {isAITyping && <TypingIndicator character={character} loading={loading} />}
         </AnimatePresence>
         <div ref={messagesEndRef} />
       </CardContent>
