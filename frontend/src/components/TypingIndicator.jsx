@@ -1,12 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Bot } from "lucide-react";
 
 const bounceTransition = {
   y: { duration: 0.6, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }
 };
 
-export default function TypingIndicator() {
+export default function TypingIndicator({ character, loading }) {
+  if (!loading) return null;
+
   return (
     <motion.div
       // Animate the indicator bubble itself
@@ -16,8 +17,8 @@ export default function TypingIndicator() {
       className="flex justify-start mb-4"
     >
       <div className="flex items-end space-x-2">
-        <div className="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center">
-          <Bot className="w-4 h-4 text-gray-800" />
+        <div className="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center text-2xl">
+          {character?.emoji || "🤖"}
         </div>
         <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl rounded-bl-sm px-4 py-3">
           <div className="flex items-center space-x-1">
