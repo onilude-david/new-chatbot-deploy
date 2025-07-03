@@ -6,7 +6,10 @@ import apiRoutes from "./routes/api.js"; // Use the new router
 dotenv.config();
 
 const app = express();
-app.use(cors());
+// Allow only your Vercel frontend to access the backend
+app.use(cors({
+  origin: "https://lanteraibot.vercel.app"
+}));
 app.use(express.json());
 
 // Use the new unified router for all /api routes
