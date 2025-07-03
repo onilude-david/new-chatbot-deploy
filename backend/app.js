@@ -6,9 +6,16 @@ import apiRoutes from "./routes/api.js"; // Use the new router
 dotenv.config();
 
 const app = express();
-// Allow only your Vercel frontend to access the backend
+// Allow both local development and production URLs
 app.use(cors({
-  origin: "https://lanteraibot.vercel.app"
+  origin: [
+    "https://lanteraibot.vercel.app",
+    "http://localhost:5173", // Vite dev server
+    "http://localhost:3000", // Alternative dev port
+    "http://127.0.0.1:5173", // Alternative localhost
+    "http://127.0.0.1:3000"  // Alternative localhost
+  ],
+  credentials: true
 }));
 app.use(express.json());
 

@@ -92,7 +92,9 @@ export default function ChatWidget({
       typingTimeout.current = setTimeout(() => {
         setMessages((prev) => {
           const lastMsg = prev[prev.length - 1];
-          if (!lastMsg || lastMsg.role !== "ai") return prev;
+          if (!lastMsg || lastMsg.from !== "ai") {
+            return prev;
+          }
           // Append next character to last AI message
           const updated = [
             ...prev.slice(0, -1),
@@ -124,7 +126,9 @@ export default function ChatWidget({
   };
 
   const sendMessage = async () => {
-    if ((!input.trim() && !file) || !activeSession) return;
+    if ((!input.trim() && !file) || !activeSession) {
+      return;
+    }
 
     const userMsg = { 
       from: "user", 
@@ -150,8 +154,7 @@ export default function ChatWidget({
         formData.append("file", file);
       }
 
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const res = await fetch(`${apiUrl}/api/chat`, {
+      const res = await fetch(`/api/chat`, {
         method: "POST",
         body: formData,
       });
@@ -166,7 +169,9 @@ export default function ChatWidget({
 
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
+        if (done) {
+          break;
+        }
         const chunk = decoder.decode(value, { stream: true });
         setPendingAIText(prev => prev + chunk); // Buffer the chunk for typing effect
       }
@@ -178,8 +183,7 @@ export default function ChatWidget({
         return newMessages;
       });
     }
-    setLoading(false);
-    setPendingAIText(""); // Clear buffer when done
+    // Let the typing effect handle completion
   };
 
   const sendSpecificMessage = async (questionText) => {
@@ -199,8 +203,7 @@ export default function ChatWidget({
       formData.append("history", JSON.stringify(updatedHistory));
       formData.append("userName", userName);
 
-      const apiUrl = import.meta.env.VITE_API_URL;
-      const res = await fetch(`${apiUrl}/api/chat`, {
+      const res = await fetch(`/api/chat`, {
         method: "POST",
         body: formData,
       });
@@ -228,7 +231,7 @@ export default function ChatWidget({
       });
       console.error(e);
     }
-    // Do not setLoading(false) or setPendingAIText("") here; let the typing effect handle it.
+    // Let the typing effect handle completion
   };
 
   useEffect(() => {
@@ -363,7 +366,9 @@ export default function ChatWidget({
               rows={1}
               disabled={loading}
             />
-            <Button onClick={sendMessage} disabled={loading || (!input.trim() && !file)} className="shrink-0 py-3 text-base sm:text-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200">
+            <Button onClick={() => {
+              sendMessage();
+            }} disabled={loading || (!input.trim() && !file)} className="shrink-0 py-3 text-base sm:text-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-200">
               Send
             </Button>
             <VoiceButton 
