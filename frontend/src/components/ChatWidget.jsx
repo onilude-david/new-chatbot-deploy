@@ -6,7 +6,7 @@ import ProgressIndicator from './ProgressIndicator';
 import MiniGame from './MiniGame';
 import StudyTimer from './StudyTimer';
 import CharacterAnimations from './CharacterAnimations';
-import BadgeSystem from './BadgeSystem';
+
 import FlashcardCreator from './FlashcardCreator';
 import AdvancedGames from './AdvancedGames';
 import SoundManager from './SoundManager';
@@ -92,7 +92,7 @@ export default function ChatWidget({
   const [showLearningPath, setShowLearningPath] = useState(false);
   const [showStorybookStore, setShowStorybookStore] = useState(false);
   const [totalMessages, setTotalMessages] = useState(0);
-  const [studySessions, setStudySessions] = useState(0);
+
   const [achievementPoints, setAchievementPoints] = useState(0);
   const [isCharacterActive, setIsCharacterActive] = useState(false);
 
@@ -122,13 +122,7 @@ export default function ChatWidget({
     setIsCharacterActive(loading || isAITyping);
   }, [loading, isAITyping]);
 
-  // Load study sessions from localStorage
-  useEffect(() => {
-    const savedSessions = localStorage.getItem(`study_sessions_${character.id}_${userName}`);
-    if (savedSessions) {
-      setStudySessions(parseInt(savedSessions));
-    }
-  }, [character.id, userName]);
+
 
   // 2. Auto-resize textarea
   useEffect(() => {
@@ -180,17 +174,7 @@ export default function ChatWidget({
     setActiveSessionId(newAssignment.id);
   };
 
-  const handleBadgeEarned = (badge) => {
-    playSound('achievement');
-    // Update study sessions if it's a study-related badge
-    if (badge.type === 'session') {
-      setStudySessions(prev => {
-        const newCount = prev + 1;
-        localStorage.setItem(`study_sessions_${character.id}_${userName}`, newCount.toString());
-        return newCount;
-      });
-    }
-  };
+
 
   const handleGameScore = (score) => {
     setAchievementPoints(prev => prev + score);
@@ -515,15 +499,9 @@ export default function ChatWidget({
         </div>
       </CardHeader>
       
-      {/* Progress Indicator and Badge System */}
-      <div className="px-3 sm:px-5 pt-3 space-y-3">
+      {/* Progress Indicator */}
+      <div className="px-3 sm:px-5 pt-3">
         <ProgressIndicator messagesCount={totalMessages} characterName={character.name} />
-        <BadgeSystem 
-          totalMessages={totalMessages} 
-          studySessions={studySessions} 
-          characterName={character.name}
-          onBadgeEarned={handleBadgeEarned}
-        />
       </div>
 
       <CardContent className="flex-1 overflow-y-auto p-2 sm:p-3 md:p-5 space-y-3 sm:space-y-4 bg-gradient-to-b from-transparent to-blue-50/20 dark:to-gray-800/20">
