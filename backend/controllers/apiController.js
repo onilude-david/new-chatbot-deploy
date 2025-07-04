@@ -1,5 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import characters from "../prompts/characters.js";
+import { lanternStories } from "../prompts/stories.js";
 import { ElevenLabsClient } from "elevenlabs";
 // import pdf from "pdf-parse"; // We no longer need this
 
@@ -18,6 +19,19 @@ export function getCharacters(req, res) {
     voiceId: value.voiceId, 
   }));
   res.json(characterInfo);
+}
+
+export function getStories(req, res) {
+  const storyInfo = Object.entries(lanternStories).map(([key, value]) => ({
+    id: key,
+    title: value.title,
+    author: value.author,
+    ageGroup: value.ageGroup,
+    duration: value.duration,
+    themes: value.themes,
+    summary: value.summary
+  }));
+  res.json(storyInfo);
 }
 
 export async function chatWithAI(req, res) {

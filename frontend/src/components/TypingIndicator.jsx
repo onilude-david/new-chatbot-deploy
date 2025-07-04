@@ -11,40 +11,50 @@ export default function TypingIndicator({ character }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0 }}
-      className="flex justify-start mb-4"
+      className="flex justify-start mb-6"
     >
-      <div className="flex items-end space-x-2">
-        <div className="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center text-2xl">
+      <div className="flex items-end space-x-3">
+        <motion.div 
+          className="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-400 to-orange-400 flex items-center justify-center text-2xl shadow-lg ring-2 ring-yellow-200 dark:ring-yellow-800"
+          whileHover={{ scale: 1.1 }}
+          transition={{ duration: 0.2 }}
+        >
           {character?.emoji || "🤖"}
-        </div>
-        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl rounded-bl-sm px-4 py-3">
-          <div className="flex items-center space-x-2">
+        </motion.div>
+        <motion.div 
+          className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-700 border border-gray-200/50 dark:border-gray-600/50 rounded-2xl rounded-bl-md px-5 py-4 shadow-lg backdrop-blur-sm"
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
+        >
+          <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-1">
               <motion.span
-                className="block w-2 h-2 bg-gray-400 rounded-full"
+                className="block w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full shadow-sm"
                 variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
                 transition={bounceTransition}
                 initial="initial"
                 animate="animate"
               />
               <motion.span
-                className="block w-2 h-2 bg-gray-400 rounded-full"
+                className="block w-3 h-3 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full shadow-sm"
                 variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
                 transition={{ ...bounceTransition, delay: 0.2 }}
                 initial="initial"
                 animate="animate"
               />
               <motion.span
-                className="block w-2 h-2 bg-gray-400 rounded-full"
+                className="block w-3 h-3 bg-gradient-to-r from-pink-400 to-blue-400 rounded-full shadow-sm"
                 variants={{ initial: { y: '0%' }, animate: { y: '-50%' } }}
                 transition={{ ...bounceTransition, delay: 0.4 }}
                 initial="initial"
                 animate="animate"
               />
             </div>
-            <span className="text-xs text-gray-400 ml-2">typing…</span>
+            <span className="text-sm text-gray-500 dark:text-gray-400 font-medium bg-gradient-to-r from-gray-600 to-gray-500 dark:from-gray-300 dark:to-gray-400 bg-clip-text text-transparent">
+              {character?.name || "AI"} is typing…
+            </span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );

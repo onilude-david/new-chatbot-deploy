@@ -18,47 +18,107 @@ export default function WelcomeScreen({ onNameSubmit }) {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.3 }}
-      className="flex items-center justify-center min-h-screen p-4"
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-pink-100 via-yellow-100 to-blue-100 dark:from-purple-900 dark:via-indigo-900 dark:to-pink-900"
     >
-      <Card className="w-full max-w-sm mx-auto shadow-2xl border-0 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900">
-        <form onSubmit={handleSubmit}>
-          <CardHeader className="text-center space-y-2 pb-4">
-            <motion.div
-              initial={{ y: -20 }}
-              animate={{ y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-6xl mb-2"
-            >
-              🎓
-            </motion.div>
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Welcome To Lanter's Homework Helper!
-            </CardTitle>
-            <CardDescription className="text-sm text-gray-600 dark:text-gray-300">
-              Please enter your first name to get started.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Input
-              placeholder="Your name..."
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              autoFocus
-              className="text-lg py-3 px-4 border-2 focus:border-blue-500 transition-all duration-200"
-            />
-          </CardContent>
-          <CardFooter>
-            <Button 
-              type="submit" 
-              className="w-full py-3 text-lg font-semibold bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
-            >
-              Let's Go! 🚀
-            </Button>
-          </CardFooter>
-        </form>
-      </Card>
+      <motion.div
+        initial={{ y: 30, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.8 }}
+      >
+        <Card className="w-full max-w-md mx-auto shadow-2xl border-0 bg-gradient-to-br from-white via-pink-50/50 to-yellow-50/50 dark:from-purple-800 dark:via-pink-800 dark:to-orange-800 rounded-3xl overflow-hidden backdrop-blur-sm">
+          <form onSubmit={handleSubmit}>
+            <CardHeader className="text-center space-y-4 pb-6 pt-8">
+              <motion.div
+                initial={{ y: -20, scale: 0.8 }}
+                animate={{ y: 0, scale: 1 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="text-8xl mb-4 drop-shadow-lg"
+                whileHover={{ 
+                  scale: 1.3, 
+                  rotate: [0, 15, -15, 0],
+                  transition: { duration: 0.8, ease: "easeInOut" }
+                }}
+              >
+                🎓
+              </motion.div>
+              {/* Floating sparkles */}
+              <motion.div 
+                className="absolute inset-0 pointer-events-none"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1, duration: 0.5 }}
+              >
+                <motion.div 
+                  className="absolute top-8 right-8 text-2xl"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 10, -10, 0],
+                    y: [0, -10, 0]
+                  }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  ✨
+                </motion.div>
+                <motion.div 
+                  className="absolute bottom-8 left-8 text-xl"
+                  animate={{ 
+                    scale: [1, 1.3, 1],
+                    rotate: [0, -15, 15, 0],
+                    y: [0, 10, 0]
+                  }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                >
+                  🌟
+                </motion.div>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.6 }}
+              >
+                <CardTitle className="text-3xl font-bold bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent mb-2">
+                  Welcome To Lanter's Homework Helper! 🎉
+                </CardTitle>
+                <CardDescription className="text-base text-gray-700 dark:text-gray-200 font-medium">
+                  Please enter your first name to get started with your personalized learning experience! 🚀
+                </CardDescription>
+              </motion.div>
+            </CardHeader>
+            <CardContent className="space-y-6 px-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1, duration: 0.6 }}
+              >
+                <Input
+                  placeholder="Your name..."
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  autoFocus
+                  className="text-lg py-4 px-5 border-2 border-pink-200/50 dark:border-pink-500/50 focus:border-pink-500 dark:focus:border-pink-400 transition-all duration-300 rounded-xl bg-white/80 dark:bg-purple-800/80 backdrop-blur-sm shadow-sm focus:shadow-md"
+                />
+              </motion.div>
+            </CardContent>
+            <CardFooter className="px-8 pb-8">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.2, duration: 0.6 }}
+                className="w-full"
+              >
+                <Button 
+                  type="submit" 
+                  className="w-full py-4 text-lg font-semibold bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-500 hover:from-pink-600 hover:via-orange-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105 rounded-xl shadow-lg hover:shadow-xl"
+                >
+                  Let's Go! 🚀
+                </Button>
+              </motion.div>
+            </CardFooter>
+          </form>
+        </Card>
+      </motion.div>
     </motion.div>
   );
 }

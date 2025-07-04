@@ -2,9 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import CharacterSelector from "./components/CharacterSelector";
 import ChatWidget from "./components/ChatWidget";
 import WelcomeScreen from "./components/WelcomeScreen";
+import Footer from "./components/Footer";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { ThemeProviderContext } from "./components/ThemeProvider";
+import { motion } from "framer-motion";
 
 // Use environment variable for production, empty string for local development (proxy)
 const apiUrl = import.meta.env.VITE_API_URL || "";
@@ -33,9 +35,45 @@ export default function App() {
     }
   }, [userName]);
 
+  // Keyboard shortcuts for kids
+  useEffect(() => {
+    const handleKeyPress = (e) => {
+      // Escape key to go back
+      if (e.key === 'Escape' && selectedCharacter) {
+        handleCharacterSwitch();
+      }
+      // Enter key to submit (when focused on input)
+      if (e.key === 'Enter' && e.target.tagName === 'INPUT') {
+        e.target.form?.requestSubmit();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyPress);
+    return () => document.removeEventListener('keydown', handleKeyPress);
+  }, [selectedCharacter]);
+
   const handleNameSubmit = (name) => {
     localStorage.setItem("userName", name);
     setUserName(name);
+    // Add celebration effect
+    const celebration = document.createElement('div');
+    celebration.innerHTML = '🎉 Welcome! 🎉';
+    celebration.style.cssText = `
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      z-index: 1000;
+      animation: celebration 2s ease-out forwards;
+    `;
+    document.body.appendChild(celebration);
+    setTimeout(() => celebration.remove(), 2000);
   };
 
   // Enhanced handleCharacterSwitch function
@@ -69,7 +107,67 @@ export default function App() {
     }
     
     if (characters.length === 0) {
-        return <div>Loading characters...</div>;
+        return (
+          <motion.div 
+            className="flex items-center justify-center min-h-screen"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="text-center">
+              <motion.div 
+                className="text-8xl mb-6"
+                animate={{ 
+                  rotate: [0, 360],
+                  scale: [1, 1.2, 1],
+                  y: [0, -10, 0]
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+              >
+                🎓✨
+              </motion.div>
+              <motion.h2 
+                className="text-3xl font-bold bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent mb-4"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                Getting Your Tutors Ready! 🎉
+              </motion.h2>
+              <motion.p 
+                className="text-xl text-gray-700 dark:text-gray-200 font-medium mb-6"
+                animate={{ opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+              >
+                Loading amazing characters for you! 🌟
+              </motion.p>
+              <motion.div 
+                className="flex justify-center space-x-2"
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <motion.div 
+                  className="w-3 h-3 bg-pink-500 rounded-full"
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+                />
+                <motion.div 
+                  className="w-3 h-3 bg-yellow-500 rounded-full"
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
+                />
+                <motion.div 
+                  className="w-3 h-3 bg-blue-500 rounded-full"
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
+                />
+              </motion.div>
+            </div>
+          </motion.div>
+        );
     }
 
     if (selectedCharacter) {
@@ -94,22 +192,88 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 transition-colors duration-300 flex items-center justify-center p-2 sm:p-4">
-      <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50">
-        <Button
-          variant="outline"
-          size="icon"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg hover:shadow-xl transition-all duration-200"
-        >
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Main Content Area with Background */}
+      <div className="min-h-screen bg-gradient-to-br from-pink-100 via-yellow-100 to-blue-100 dark:from-purple-900 dark:via-indigo-900 dark:to-pink-900 transition-all duration-500">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className="absolute top-20 left-20 w-32 h-32 bg-pink-300/30 dark:bg-pink-500/30 rounded-full blur-3xl"
+            animate={{ 
+              x: [0, 100, 0],
+              y: [0, -50, 0],
+              scale: [1, 1.2, 1]
+            }}
+            transition={{ 
+              duration: 20, 
+              repeat: Infinity, 
+              ease: "easeInOut" 
+            }}
+          />
+          <motion.div
+            className="absolute bottom-20 right-20 w-40 h-40 bg-yellow-300/30 dark:bg-yellow-500/30 rounded-full blur-3xl"
+            animate={{ 
+              x: [0, -80, 0],
+              y: [0, 60, 0],
+              scale: [1, 0.8, 1]
+            }}
+            transition={{ 
+              duration: 25, 
+              repeat: Infinity, 
+              ease: "easeInOut",
+              delay: 5
+            }}
+          />
+          <motion.div
+            className="absolute top-1/2 left-1/2 w-24 h-24 bg-blue-300/30 dark:bg-blue-500/30 rounded-full blur-2xl"
+            animate={{ 
+              x: [0, 60, 0],
+              y: [0, -40, 0],
+              scale: [1, 1.5, 1]
+            }}
+            transition={{ 
+              duration: 15, 
+              repeat: Infinity, 
+              ease: "easeInOut",
+              delay: 10
+            }}
+          />
+        </div>
+        
+        <div className="fixed top-2 right-2 sm:top-4 sm:right-4 z-50">
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-md shadow-lg hover:shadow-xl transition-all duration-300 border-gray-200/50 dark:border-gray-600/50 rounded-full"
+            >
+              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          </motion.div>
+        </div>
+        
+        {/* Main Content */}
+        <main className="flex items-center justify-center p-2 sm:p-4 relative z-10 min-h-screen">
+          <motion.div 
+            className="w-full max-w-xs sm:max-w-md md:max-w-2xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            {renderContent()}
+          </motion.div>
+        </main>
       </div>
-      <div className="w-full max-w-xs sm:max-w-md md:max-w-2xl">
-        {renderContent()}
-      </div>
+      
+      {/* Footer - Outside the main background */}
+      <Footer />
     </div>
   );
 }
