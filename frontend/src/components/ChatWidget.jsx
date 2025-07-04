@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import MessageBubble from "./MessageBubble";
 import VoiceButton from "./VoiceButton";
 import TypingIndicator from './TypingIndicator';
-import ProgressIndicator from './ProgressIndicator';
+
 import MiniGame from './MiniGame';
 import StudyTimer from './StudyTimer';
-import CharacterAnimations from './CharacterAnimations';
+
 
 import FlashcardCreator from './FlashcardCreator';
 import AdvancedGames from './AdvancedGames';
@@ -13,7 +13,7 @@ import SoundManager from './SoundManager';
 import ProgressDashboard from './ProgressDashboard';
 import LearningPath from './LearningPath';
 import StorybookStore from './StorybookStore';
-import { useSound } from '../hooks/useSound';
+
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,7 +27,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import 'highlight.js/styles/github.css';
 
-const TYPING_SPEED = 30; // ms per character
+
 
 export default function ChatWidget({ 
   character, 
@@ -79,10 +79,8 @@ export default function ChatWidget({
   const textareaRef = useRef(null); // For auto-resizing
   const [pendingAIText, setPendingAIText] = useState(""); // Buffer for streaming AI text
   const [isAITyping, setIsAITyping] = useState(false);
-  const typingTimeout = useRef(null);
 
   // New features state
-  const { playSound } = useSound();
   const [showMiniGame, setShowMiniGame] = useState(false);
   const [showStudyTimer, setShowStudyTimer] = useState(false);
   const [showFlashcards, setShowFlashcards] = useState(false);
@@ -93,8 +91,8 @@ export default function ChatWidget({
   const [showStorybookStore, setShowStorybookStore] = useState(false);
   const [totalMessages, setTotalMessages] = useState(0);
 
-  const [achievementPoints, setAchievementPoints] = useState(0);
-  const [isCharacterActive, setIsCharacterActive] = useState(false);
+
+
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -108,19 +106,9 @@ export default function ChatWidget({
   useEffect(() => {
     const total = sessions.reduce((sum, session) => sum + session.messages.length, 0);
     setTotalMessages(total);
-    
-    // Play sound effects for achievements
-    if (total === 5 || total === 15 || total === 30) {
-      playSound('celebration');
-    } else if (total > 0) {
-      playSound('notification');
-    }
-  }, [sessions, playSound]);
+  }, [sessions]);
 
-  // Character activity effect
-  useEffect(() => {
-    setIsCharacterActive(loading || isAITyping);
-  }, [loading, isAITyping]);
+
 
 
 
@@ -132,40 +120,33 @@ export default function ChatWidget({
     }
   }, [input]);
 
-  // Typing effect: reveal pendingAIText one character at a time
+  // Direct text display: show full response immediately
   useEffect(() => {
     if (pendingAIText.length > 0) {
       setIsAITyping(true);
-      typingTimeout.current = setTimeout(() => {
-        setMessages((prev) => {
-          const lastMsg = prev[prev.length - 1];
-          if (!lastMsg || lastMsg.from !== "ai") {
-            return prev;
-          }
-          // Append next character to last AI message
-          const updated = [
-            ...prev.slice(0, -1),
-            { ...lastMsg, text: lastMsg.text + pendingAIText[0] },
-          ];
-          return updated;
-        });
-        setPendingAIText((t) => t.slice(1));
-      }, TYPING_SPEED);
-    } else {
+      setMessages((prev) => {
+        const lastMsg = prev[prev.length - 1];
+        if (!lastMsg || lastMsg.from !== "ai") {
+          return prev;
+        }
+        // Show full response immediately
+        const updated = [
+          ...prev.slice(0, -1),
+          { ...lastMsg, text: lastMsg.text + pendingAIText },
+        ];
+        return updated;
+      });
+      setPendingAIText(""); // Clear buffer
       setIsAITyping(false);
-      clearTimeout(typingTimeout.current);
     }
-    return () => clearTimeout(typingTimeout.current);
   }, [pendingAIText]);
 
   // When pendingAIText is empty and loading, finish loading
   useEffect(() => {
     if (loading && pendingAIText === "") {
       setLoading(false);
-      // Play success sound when AI finishes responding
-      playSound('success');
     }
-  }, [pendingAIText, loading, playSound]);
+  }, [pendingAIText, loading]);
 
   const handleNewChat = () => {
     // This function now creates a "New Assignment"
@@ -176,16 +157,12 @@ export default function ChatWidget({
 
 
 
-  const handleGameScore = (score) => {
-    setAchievementPoints(prev => prev + score);
-    playSound('celebration');
-  };
+
 
   const handleStorySelect = (story) => {
     setShowStorybookStore(false);
     const storyMessage = `I'd like to read "${story.title}" today! Can you read it to me?`;
     setInput(storyMessage);
-    playSound('notification');
   };
 
   const sendMessage = async () => {
@@ -193,8 +170,7 @@ export default function ChatWidget({
       return;
     }
 
-    // Play click sound when sending message
-    playSound('click');
+
 
     const userMsg = { 
       from: "user", 
@@ -338,9 +314,7 @@ export default function ChatWidget({
           <Button variant="ghost" size="icon" onClick={() => onBack()} className="hover:bg-blue-100/80 dark:hover:bg-gray-800/80 rounded-full transition-all duration-200">
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <CharacterAnimations character={character} isActive={isCharacterActive}>
-            <div className="text-3xl sm:text-4xl drop-shadow-lg">{character.emoji}</div>
-          </CharacterAnimations>
+          <div className="text-3xl sm:text-4xl drop-shadow-lg">{character.emoji}</div>
           <div>
             <CardTitle className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 bg-clip-text text-transparent">{character.name}</CardTitle>
             <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">{character.subject} Tutor</div>
@@ -499,10 +473,7 @@ export default function ChatWidget({
         </div>
       </CardHeader>
       
-      {/* Progress Indicator */}
-      <div className="px-3 sm:px-5 pt-3">
-        <ProgressIndicator messagesCount={totalMessages} characterName={character.name} />
-      </div>
+
 
       <CardContent className="flex-1 overflow-y-auto p-2 sm:p-3 md:p-5 space-y-3 sm:space-y-4 bg-gradient-to-b from-transparent to-blue-50/20 dark:to-gray-800/20">
         <AnimatePresence>
