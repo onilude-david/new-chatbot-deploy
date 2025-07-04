@@ -17,7 +17,7 @@ import { useSound } from '../hooks/useSound';
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, PlusCircle, History, Paperclip, X, Gamepad2, Timer, Trophy, BookOpen, Music, BarChart3, Award, Settings, Target } from "lucide-react";
+import { ArrowLeft, PlusCircle, History, Paperclip, X, Gamepad2, Timer, Trophy, BookOpen, Music, BarChart3, Award, Settings, Target, MoreHorizontal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -363,8 +363,10 @@ export default function ChatWidget({
           </div>
         </div>
         <div className="flex items-center space-x-1">
-          {/* Learning Path Button */}
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          {/* Mobile: Show only essential buttons, desktop: show all */}
+          
+          {/* Always visible on mobile and desktop */}
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="hidden sm:block">
             <Button 
               variant="ghost" 
               size="icon" 
@@ -376,8 +378,7 @@ export default function ChatWidget({
             </Button>
           </motion.div>
 
-          {/* Progress Dashboard Button */}
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="hidden sm:block">
             <Button 
               variant="ghost" 
               size="icon" 
@@ -389,8 +390,7 @@ export default function ChatWidget({
             </Button>
           </motion.div>
 
-          {/* Sound Manager Button */}
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="hidden sm:block">
             <Button 
               variant="ghost" 
               size="icon" 
@@ -402,8 +402,7 @@ export default function ChatWidget({
             </Button>
           </motion.div>
 
-          {/* Flashcard Creator Button */}
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="hidden sm:block">
             <Button 
               variant="ghost" 
               size="icon" 
@@ -415,8 +414,7 @@ export default function ChatWidget({
             </Button>
           </motion.div>
 
-          {/* Advanced Games Button */}
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="hidden sm:block">
             <Button 
               variant="ghost" 
               size="icon" 
@@ -430,7 +428,7 @@ export default function ChatWidget({
 
           {/* Storybook Store Button - Only show for Storybook character */}
           {character.id === 'storybook' && (
-            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="hidden sm:block">
               <Button 
                 variant="ghost" 
                 size="icon" 
@@ -443,8 +441,7 @@ export default function ChatWidget({
             </motion.div>
           )}
 
-          {/* Study Timer Button */}
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} className="hidden sm:block">
             <Button 
               variant="ghost" 
               size="icon" 
@@ -456,6 +453,48 @@ export default function ChatWidget({
             </Button>
           </motion.div>
           
+          {/* Mobile: Dropdown menu for all features */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" title="More Features" className="sm:hidden hover:bg-gray-100/80 dark:hover:bg-gray-800/80 rounded-full transition-all duration-200">
+                <MoreHorizontal className="h-5 w-5" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50">
+              <DropdownMenuItem onClick={() => setShowLearningPath(true)} className="hover:bg-indigo-50 dark:hover:bg-indigo-700 transition-colors duration-200">
+                <Target className="h-4 w-4 mr-2 text-indigo-600" />
+                Learning Path
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setShowProgressDashboard(true)} className="hover:bg-blue-50 dark:hover:bg-blue-700 transition-colors duration-200">
+                <BarChart3 className="h-4 w-4 mr-2 text-blue-600" />
+                Progress Dashboard
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setShowSoundManager(true)} className="hover:bg-yellow-50 dark:hover:bg-yellow-700 transition-colors duration-200">
+                <Music className="h-4 w-4 mr-2 text-yellow-600" />
+                Sound Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setShowFlashcards(true)} className="hover:bg-pink-50 dark:hover:bg-pink-700 transition-colors duration-200">
+                <BookOpen className="h-4 w-4 mr-2 text-pink-600" />
+                Create Flashcards
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setShowAdvancedGames(true)} className="hover:bg-purple-50 dark:hover:bg-purple-700 transition-colors duration-200">
+                <Gamepad2 className="h-4 w-4 mr-2 text-purple-600" />
+                Learning Games
+              </DropdownMenuItem>
+              {character.id === 'storybook' && (
+                <DropdownMenuItem onClick={() => setShowStorybookStore(true)} className="hover:bg-orange-50 dark:hover:bg-orange-700 transition-colors duration-200">
+                  <span className="text-lg mr-2">📚</span>
+                  Browse Stories
+                </DropdownMenuItem>
+              )}
+              <DropdownMenuItem onClick={() => setShowStudyTimer(true)} className="hover:bg-green-50 dark:hover:bg-green-700 transition-colors duration-200">
+                <Timer className="h-4 w-4 mr-2 text-green-600" />
+                Study Timer
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
+          {/* Always visible buttons */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" title="Past Assignments" className="hover:bg-blue-100/80 dark:hover:bg-gray-800/80 rounded-full transition-all duration-200">
