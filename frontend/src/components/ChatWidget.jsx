@@ -487,7 +487,7 @@ export default function ChatWidget({
         />
       </div>
 
-      <CardContent className="flex-1 overflow-y-auto p-3 sm:p-5 space-y-4 bg-gradient-to-b from-transparent to-blue-50/20 dark:to-gray-800/20">
+      <CardContent className="flex-1 overflow-y-auto p-2 sm:p-3 md:p-5 space-y-3 sm:space-y-4 bg-gradient-to-b from-transparent to-blue-50/20 dark:to-gray-800/20">
         <AnimatePresence>
           {activeSession?.messages.map((msg, i) => {
             const showDateSeparator = i > 0 &&
@@ -522,7 +522,7 @@ export default function ChatWidget({
         </AnimatePresence>
         <div ref={messagesEndRef} />
       </CardContent>
-      <CardFooter className="p-3 sm:p-5 border-t border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white/90 to-blue-50/90 dark:from-gray-900/90 dark:to-gray-800/90 backdrop-blur-md rounded-b-3xl">
+      <CardFooter className="p-2 sm:p-3 md:p-5 border-t border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white/90 to-blue-50/90 dark:from-gray-900/90 dark:to-gray-800/90 backdrop-blur-md rounded-b-3xl">
         <div className="flex flex-col w-full">
           {/* Improved File Preview */}
           {file && (
@@ -539,7 +539,7 @@ export default function ChatWidget({
               </Button>
             </motion.div>
           )}
-          <div className="flex w-full items-end space-x-3">
+          <div className="flex w-full items-end space-x-2 sm:space-x-3">
             <input
               type="file"
               ref={fileInputRef}
@@ -552,9 +552,9 @@ export default function ChatWidget({
               size="icon" 
               onClick={() => fileInputRef.current.click()}
               title="Attach file"
-              className="shrink-0 hover:bg-blue-100/80 dark:hover:bg-gray-800/80 rounded-full transition-all duration-200"
+              className="shrink-0 h-10 w-10 sm:h-12 sm:w-12 hover:bg-blue-100/80 dark:hover:bg-gray-800/80 rounded-full transition-all duration-200"
             >
-              <Paperclip className="h-5 w-5" />
+              <Paperclip className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
             <Textarea
               ref={textareaRef}
@@ -562,7 +562,7 @@ export default function ChatWidget({
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Type your message..."
-              className="resize-none max-h-40 overflow-y-auto text-base sm:text-lg py-3 px-4 border-2 border-gray-200/50 dark:border-gray-600/50 focus:border-blue-500 dark:focus:border-blue-400 transition-all duration-200 rounded-xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm focus:shadow-md"
+              className="flex-1 resize-none max-h-32 sm:max-h-40 overflow-y-auto text-sm sm:text-base py-2 sm:py-3 px-3 sm:px-4 border-2 border-gray-200/50 dark:border-gray-600/50 focus:border-blue-500 dark:focus:border-blue-400 transition-all duration-200 rounded-xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-sm focus:shadow-md"
               rows={1}
               disabled={loading}
             />
@@ -571,14 +571,14 @@ export default function ChatWidget({
                 sendMessage();
               }} 
               disabled={loading || (!input.trim() && !file)} 
-              className="shrink-0 py-3 text-base sm:text-lg bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none disabled:opacity-50"
+              className="shrink-0 h-10 px-3 sm:h-12 sm:px-4 text-sm sm:text-base bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none disabled:opacity-50"
             >
               Send
             </Button>
             <VoiceButton 
               text={activeSession?.messages.filter(m => m.from === 'ai').at(-1)?.text} 
               character={character} 
-              className="shrink-0"
+              className="shrink-0 h-10 w-10 sm:h-12 sm:w-12"
             />
           </div>
         </div>

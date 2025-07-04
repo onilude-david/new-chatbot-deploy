@@ -41,28 +41,28 @@ export default function MessageBubble({ from, text, character, onSwitchCharacter
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
     >
-      <div className={`flex max-w-[85%] md:max-w-[70%] ${from === "user" ? "flex-row-reverse" : "flex-row"} items-end space-x-3`}>
+      <div className={`flex max-w-[90%] sm:max-w-[85%] md:max-w-[70%] ${from === "user" ? "flex-row-reverse" : "flex-row"} items-end space-x-2 sm:space-x-3`}>
         {/* Avatar */}
         <motion.div 
-          className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center shadow-lg
+          className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-lg
             ${from === "user" 
-              ? "bg-gradient-to-br from-pink-500 to-purple-500 text-white ml-3 ring-2 ring-pink-200 dark:ring-pink-800" 
-              : "bg-gradient-to-br from-yellow-400 to-orange-400 text-gray-800 mr-3 ring-2 ring-yellow-200 dark:ring-yellow-800"
+              ? "bg-gradient-to-br from-pink-500 to-purple-500 text-white ml-2 sm:ml-3 ring-2 ring-pink-200 dark:ring-pink-800" 
+              : "bg-gradient-to-br from-yellow-400 to-orange-400 text-gray-800 mr-2 sm:mr-3 ring-2 ring-yellow-200 dark:ring-yellow-800"
             }`}
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.2 }}
         >
           {isAI ? (
-            <span className="text-lg drop-shadow-sm">{character?.emoji || <Bot className="w-5 h-5" />}</span>
+            <span className="text-base sm:text-lg drop-shadow-sm">{character?.emoji || <Bot className="w-4 h-4 sm:w-5 sm:h-5" />}</span>
           ) : (
-            <User className="w-5 h-5" />
+            <User className="w-4 h-4 sm:w-5 sm:h-5" />
           )}
         </motion.div>
         
         {/* Message Content */}
         <motion.div 
           className={`
-            px-6 py-5 rounded-3xl shadow-lg backdrop-blur-sm
+            px-4 py-3 sm:px-6 sm:py-5 rounded-3xl shadow-lg backdrop-blur-sm
             ${from === "user"
               ? "bg-gradient-to-br from-pink-500 to-purple-500 text-white rounded-br-md shadow-pink-500/25"
               : "bg-gradient-to-br from-white to-yellow-50 dark:from-purple-800 dark:to-pink-800 text-gray-800 dark:text-white border-2 border-yellow-200/50 dark:border-pink-500/50 rounded-bl-md shadow-yellow-500/10"
@@ -84,7 +84,7 @@ export default function MessageBubble({ from, text, character, onSwitchCharacter
             </motion.div>
           )}
           <motion.div 
-            className="text-sm md:text-base whitespace-pre-wrap break-words leading-relaxed font-medium"
+            className="text-xs sm:text-sm md:text-base whitespace-pre-wrap break-words leading-relaxed font-medium"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
