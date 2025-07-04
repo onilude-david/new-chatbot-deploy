@@ -16,24 +16,42 @@ export default function App() {
   const [characters, setCharacters] = useState([]);
   const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [pendingQuestion, setPendingQuestion] = useState(null); // New state for pending questions
+  const [loadingError, setLoadingError] = useState(null);
   const { theme, setTheme } = useContext(ThemeProviderContext);
 
   useEffect(() => {
     const fetchCharacters = async () => {
       try {
-        const res = await fetch(`${apiUrl}/api/characters`);
-        if (!res.ok) throw new Error("Failed to fetch characters");
+        setLoadingError(null);
+        console.log('Fetching characters from:', `${apiUrl}/api/characters`);
+        
+        // Add timeout to prevent infinite loading
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+        
+        const res = await fetch(`${apiUrl}/api/characters`, {
+          signal: controller.signal
+        });
+        
+        clearTimeout(timeoutId);
+        console.log('Response status:', res.status);
+        
+        if (!res.ok) throw new Error(`Failed to fetch characters: ${res.status}`);
         const data = await res.json();
+        console.log('Characters loaded:', data);
         setCharacters(data);
       } catch (e) {
-        console.error(e);
+        console.error('Error fetching characters:', e);
+        setLoadingError(e.message);
+        // Set a fallback to prevent infinite loading
+        setCharacters([]);
       }
     };
     // Only fetch characters if a user name exists
     if (userName) {
       fetchCharacters();
     }
-  }, [userName]);
+  }, [userName, loadingError]);
 
   // Keyboard shortcuts for kids
   useEffect(() => {
@@ -115,56 +133,93 @@ export default function App() {
             transition={{ duration: 0.6 }}
           >
             <div className="text-center">
-              <motion.div 
-                className="text-8xl mb-6"
-                animate={{ 
-                  rotate: [0, 360],
-                  scale: [1, 1.2, 1],
-                  y: [0, -10, 0]
-                }}
-                transition={{ 
-                  duration: 2, 
-                  repeat: Infinity, 
-                  ease: "easeInOut" 
-                }}
-              >
-                🎓✨
-              </motion.div>
-              <motion.h2 
-                className="text-3xl font-bold bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent mb-4"
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              >
-                Getting Your Tutors Ready! 🎉
-              </motion.h2>
-              <motion.p 
-                className="text-xl text-gray-700 dark:text-gray-200 font-medium mb-6"
-                animate={{ opacity: [0.7, 1, 0.7] }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-              >
-                Loading amazing characters for you! 🌟
-              </motion.p>
-              <motion.div 
-                className="flex justify-center space-x-2"
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <motion.div 
-                  className="w-3 h-3 bg-pink-500 rounded-full"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
-                />
-                <motion.div 
-                  className="w-3 h-3 bg-yellow-500 rounded-full"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
-                />
-                <motion.div 
-                  className="w-3 h-3 bg-blue-500 rounded-full"
-                  animate={{ y: [0, -10, 0] }}
-                  transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
-                />
-              </motion.div>
+              {loadingError ? (
+                // Error state
+                <div>
+                  <motion.div 
+                    className="text-6xl mb-6"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 1, repeat: Infinity }}
+                  >
+                    😔
+                  </motion.div>
+                  <motion.h2 
+                    className="text-2xl font-bold text-red-600 mb-4"
+                  >
+                    Oops! Something went wrong
+                  </motion.h2>
+                  <motion.p 
+                    className="text-lg text-gray-600 mb-6 max-w-md mx-auto"
+                  >
+                    We couldn't load the characters. Please check your connection and try again.
+                  </motion.p>
+                  <Button
+                    onClick={() => {
+                      setCharacters([]);
+                      setLoadingError(null);
+                      // Trigger a re-fetch
+                      const event = new Event('storage');
+                      window.dispatchEvent(event);
+                    }}
+                    className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white px-6 py-3 rounded-lg font-semibold"
+                  >
+                    Try Again 🔄
+                  </Button>
+                </div>
+              ) : (
+                // Loading state
+                <div>
+                  <motion.div 
+                    className="text-8xl mb-6"
+                    animate={{ 
+                      scale: [1, 1.1, 1],
+                      y: [0, -5, 0]
+                    }}
+                    transition={{ 
+                      duration: 2, 
+                      repeat: Infinity, 
+                      ease: "easeInOut" 
+                    }}
+                  >
+                    🎓✨
+                  </motion.div>
+                  <motion.h2 
+                    className="text-3xl font-bold bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent mb-4"
+                    animate={{ scale: [1, 1.05, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    Getting Your Tutors Ready! 🎉
+                  </motion.h2>
+                  <motion.p 
+                    className="text-xl text-gray-700 dark:text-gray-200 font-medium mb-6"
+                    animate={{ opacity: [0.7, 1, 0.7] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    Loading amazing characters for you! 🌟
+                  </motion.p>
+                  <motion.div 
+                    className="flex justify-center space-x-2"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <motion.div 
+                      className="w-3 h-3 bg-pink-500 rounded-full"
+                      animate={{ y: [0, -10, 0] }}
+                      transition={{ duration: 0.6, repeat: Infinity, delay: 0 }}
+                    />
+                    <motion.div 
+                      className="w-3 h-3 bg-yellow-500 rounded-full"
+                      animate={{ y: [0, -10, 0] }}
+                      transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
+                    />
+                    <motion.div 
+                      className="w-3 h-3 bg-blue-500 rounded-full"
+                      animate={{ y: [0, -10, 0] }}
+                      transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
+                    />
+                  </motion.div>
+                </div>
+              )}
             </div>
           </motion.div>
         );

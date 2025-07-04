@@ -4,10 +4,19 @@ import { lanternStories } from "../prompts/stories.js";
 import { ElevenLabsClient } from "elevenlabs";
 // import pdf from "pdf-parse"; // We no longer need this
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const elevenlabs = new ElevenLabsClient({
-  apiKey: process.env.ELEVENLABS_API_KEY, 
-});
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'dummy_key');
+let elevenlabs = null;
+
+// Only initialize ElevenLabs if API key is available
+if (process.env.ELEVENLABS_API_KEY) {
+  try {
+    elevenlabs = new ElevenLabsClient({
+      apiKey: process.env.ELEVENLABS_API_KEY, 
+    });
+  } catch (error) {
+    console.log('ElevenLabs initialization failed:', error.message);
+  }
+}
 
 export function getCharacters(req, res) {
   const characterInfo = Object.entries(characters).map(([key, value]) => ({
@@ -48,6 +57,11 @@ export async function chatWithAI(req, res) {
     }
     if (!userName) {
       return res.status(400).json({ error: "Missing userName" });
+    }
+
+    // Check if Gemini API is available
+    if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'dummy_key') {
+      return res.status(503).json({ error: "AI chat not available. Please configure GEMINI_API_KEY." });
     }
 
     const character = characters[characterId];
@@ -122,6 +136,12 @@ export async function speakWithElevenLabs(req, res) {
   if (!character?.voiceId) {
     console.error(`Speak request failed: No voiceId found for character ${characterId}.`);
     return res.status(400).json({ error: "Character voice configuration not found." });
+  }
+
+  // Check if ElevenLabs is available
+  if (!elevenlabs) {
+    console.log("ElevenLabs not available - returning error");
+    return res.status(503).json({ error: "Voice synthesis not available. Please configure ELEVENLABS_API_KEY." });
   }
 
   try {
