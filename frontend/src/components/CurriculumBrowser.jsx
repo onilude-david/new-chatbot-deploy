@@ -59,10 +59,10 @@ export default function CurriculumBrowser({ userName, onBack, onStartLesson }) {
     >
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
           <div>
             <motion.h1 
-              className="text-3xl font-bold text-gray-900 dark:text-white mb-2"
+              className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.1 }}
@@ -70,7 +70,7 @@ export default function CurriculumBrowser({ userName, onBack, onStartLesson }) {
               Nigerian Curriculum
             </motion.h1>
             <motion.p 
-              className="text-lg text-gray-600 dark:text-gray-300"
+              className="text-base sm:text-lg text-gray-600 dark:text-gray-300"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -86,7 +86,7 @@ export default function CurriculumBrowser({ userName, onBack, onStartLesson }) {
             <Button 
               variant="outline" 
               onClick={onBack}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-sm sm:text-base"
             >
               ← Back
             </Button>
@@ -95,7 +95,7 @@ export default function CurriculumBrowser({ userName, onBack, onStartLesson }) {
 
         {/* Breadcrumb */}
         <motion.div 
-          className="flex items-center space-x-2 mb-6 text-sm text-gray-600 dark:text-gray-400"
+          className="flex flex-wrap items-center gap-1 sm:gap-2 mb-6 text-xs sm:text-sm text-gray-600 dark:text-gray-400"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
@@ -155,12 +155,12 @@ export default function CurriculumBrowser({ userName, onBack, onStartLesson }) {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Choose Your Class Level</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-6">Choose Your Class Level</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
                 {classes.map((classInfo, index) => (
                   <motion.div
                     key={classInfo.id}
-                    className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 cursor-pointer border-2 border-transparent hover:border-blue-500 transition-all"
+                    className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-3 sm:p-6 cursor-pointer border-2 border-transparent hover:border-blue-500 transition-all"
                     whileHover={{ scale: 1.02, y: -5 }}
                     whileTap={{ scale: 0.98 }}
                     initial={{ opacity: 0, y: 20 }}
@@ -169,7 +169,7 @@ export default function CurriculumBrowser({ userName, onBack, onStartLesson }) {
                     onClick={() => handleClassSelect(classInfo.id)}
                   >
                     <div className="text-center">
-                      <div className="text-4xl mb-3">
+                      <div className="text-2xl sm:text-4xl mb-2 sm:mb-3">
                         {classInfo.id === 'nursery1' ? '👶' :
                          classInfo.id === 'nursery2' ? '👧' :
                          classInfo.id === 'primary1' ? '📚' :
@@ -179,10 +179,10 @@ export default function CurriculumBrowser({ userName, onBack, onStartLesson }) {
                          classInfo.id === 'primary5' ? '🎓' :
                          classInfo.id === 'primary6' ? '🏆' : '📚'}
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                      <h3 className="text-sm sm:text-xl font-bold text-gray-900 dark:text-white mb-1 sm:mb-2">
                         {classInfo.name}
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
+                      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                         {classInfo.age}
                       </p>
                     </div>

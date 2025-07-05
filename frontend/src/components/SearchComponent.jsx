@@ -108,10 +108,10 @@ export default function SearchComponent({ onBack, onStartLesson }) {
     >
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
           <div>
             <motion.h1 
-              className="text-3xl font-bold text-gray-900 dark:text-white mb-2"
+              className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.1 }}
@@ -119,7 +119,7 @@ export default function SearchComponent({ onBack, onStartLesson }) {
               Search Curriculum
             </motion.h1>
             <motion.p 
-              className="text-lg text-gray-600 dark:text-gray-300"
+              className="text-base sm:text-lg text-gray-600 dark:text-gray-300"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -134,7 +134,7 @@ export default function SearchComponent({ onBack, onStartLesson }) {
           >
             <button 
               onClick={onBack}
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-sm sm:text-base"
             >
               ← Back
             </button>
@@ -155,7 +155,7 @@ export default function SearchComponent({ onBack, onStartLesson }) {
               placeholder="Search for topics, subjects, or keywords..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 sm:py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm sm:text-base"
             />
           </div>
         </motion.div>
@@ -183,11 +183,11 @@ export default function SearchComponent({ onBack, onStartLesson }) {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                   Search Results
                 </h2>
-                <span className="text-sm text-gray-600 dark:text-gray-400">
+                <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                   {searchResults.length} result{searchResults.length !== 1 ? 's' : ''}
                 </span>
               </div>
@@ -211,37 +211,37 @@ export default function SearchComponent({ onBack, onStartLesson }) {
                   {searchResults.map((result, index) => (
                     <motion.div
                       key={`${result.classId}-${result.subjectKey}-${result.topic.id}`}
-                      className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700"
+                      className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 border border-gray-200 dark:border-gray-700"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
                       whileHover={{ scale: 1.02, y: -2 }}
                     >
-                      <div className="flex items-start justify-between">
+                      <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
-                            <span className="text-2xl">{getClassIcon(result.classId)}</span>
-                            <span className="text-2xl">{getSubjectIcon(result.subjectKey)}</span>
-                            <span className="text-sm text-gray-500 dark:text-gray-400">
+                            <span className="text-xl sm:text-2xl">{getClassIcon(result.classId)}</span>
+                            <span className="text-xl sm:text-2xl">{getSubjectIcon(result.subjectKey)}</span>
+                            <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                               {result.className} • {result.subjectName}
                             </span>
                           </div>
                           
-                          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                          <h3 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white mb-2">
                             {result.topic.title}
                           </h3>
                           
-                          <p className="text-gray-600 dark:text-gray-400 mb-3">
+                          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-3">
                             {result.topic.description}
                           </p>
                           
-                          <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
+                          <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                             <div className="flex items-center gap-1">
-                              <Target className="h-4 w-4" />
+                              <Target className="h-3 w-3 sm:h-4 sm:w-4" />
                               {result.topic.exercises.length} exercises
                             </div>
                             <div className="flex items-center gap-1">
-                              <Clock className="h-4 w-4" />
+                              <Clock className="h-3 w-3 sm:h-4 sm:w-4" />
                               ~15 minutes
                             </div>
                             <div className={`px-2 py-1 rounded-full text-xs text-white ${getDifficultyColor(result.topic.difficulty)}`}>
@@ -252,7 +252,7 @@ export default function SearchComponent({ onBack, onStartLesson }) {
                         
                         <button
                           onClick={() => onStartLesson(result.classId, result.subjectKey, result.topic)}
-                          className="ml-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
+                          className="px-3 sm:px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs sm:text-sm font-medium transition-colors"
                         >
                           Start Lesson
                         </button>
@@ -272,10 +272,10 @@ export default function SearchComponent({ onBack, onStartLesson }) {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white mb-6">
                 Popular Searches
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 gap-3 sm:gap-4">
                 {[
                   'addition',
                   'phonics',

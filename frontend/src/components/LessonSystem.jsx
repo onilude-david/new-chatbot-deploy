@@ -161,10 +161,10 @@ export default function LessonSystem({
     >
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
           <div>
             <motion.h1 
-              className="text-3xl font-bold text-gray-900 dark:text-white mb-2"
+              className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.1 }}
@@ -172,7 +172,7 @@ export default function LessonSystem({
               {lesson.topic.title}
             </motion.h1>
             <motion.p 
-              className="text-lg text-gray-600 dark:text-gray-300"
+              className="text-base sm:text-lg text-gray-600 dark:text-gray-300"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -188,7 +188,7 @@ export default function LessonSystem({
             <Button 
               variant="outline" 
               onClick={onBack}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-sm sm:text-base"
             >
               ← Back
             </Button>
@@ -234,25 +234,25 @@ export default function LessonSystem({
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}
-            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-8"
+            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-8 mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white">
-                {currentStepData.type === 'introduction' && <Play className="h-6 w-6" />}
-                {currentStepData.type === 'content' && <BookOpen className="h-6 w-6" />}
-                {currentStepData.type === 'exercise' && <Target className="h-6 w-6" />}
-                {currentStepData.type === 'quiz' && <Star className="h-6 w-6" />}
-                {currentStepData.type === 'completion' && <CheckCircle className="h-6 w-6" />}
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-full flex items-center justify-center text-white">
+                {currentStepData.type === 'introduction' && <Play className="h-5 w-5 sm:h-6 sm:w-6" />}
+                {currentStepData.type === 'content' && <BookOpen className="h-5 w-5 sm:h-6 sm:w-6" />}
+                {currentStepData.type === 'exercise' && <Target className="h-5 w-5 sm:h-6 sm:w-6" />}
+                {currentStepData.type === 'quiz' && <Star className="h-5 w-5 sm:h-6 sm:w-6" />}
+                {currentStepData.type === 'completion' && <CheckCircle className="h-5 w-5 sm:h-6 sm:w-6" />}
               </div>
               <div>
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">
                   {currentStepData.title}
                 </h2>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
                   {currentStepData.duration} minutes
                 </p>
               </div>
@@ -311,20 +311,20 @@ export default function LessonSystem({
 
             {currentStepData.type === 'quiz' && (
               <div className="space-y-6">
-                <p className="text-lg text-gray-700 dark:text-gray-300">
+                <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300">
                   {currentStepData.content}
                 </p>
-                <div className="space-y-6">
+                <div className="space-y-4 sm:space-y-6">
                   {currentStepData.questions.map((question, qIndex) => (
-                    <div key={qIndex} className="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
+                    <div key={qIndex} className="bg-gray-50 dark:bg-gray-700 p-4 sm:p-6 rounded-lg">
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4 text-sm sm:text-base">
                         Question {qIndex + 1}: {question.question}
                       </h3>
                       <div className="space-y-2">
                         {question.options.map((option, oIndex) => (
                           <label
                             key={oIndex}
-                            className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors ${
+                            className={`flex items-center p-2 sm:p-3 rounded-lg cursor-pointer transition-colors ${
                               userAnswers[qIndex] === oIndex
                                 ? 'bg-blue-100 dark:bg-blue-900/30 border-blue-500'
                                 : 'bg-white dark:bg-gray-600 border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600'
@@ -336,9 +336,9 @@ export default function LessonSystem({
                               value={oIndex}
                               checked={userAnswers[qIndex] === oIndex}
                               onChange={() => handleAnswer(qIndex, oIndex)}
-                              className="mr-3"
+                              className="mr-2 sm:mr-3"
                             />
-                            <span className="text-gray-700 dark:text-gray-300">
+                            <span className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
                               {option}
                             </span>
                           </label>
@@ -372,21 +372,21 @@ export default function LessonSystem({
         </AnimatePresence>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
           <Button
             variant="outline"
             onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
             disabled={currentStep === 0}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 text-sm sm:text-base"
           >
             ← Previous
           </Button>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
             <Button
               variant="outline"
               onClick={() => setIsPlaying(!isPlaying)}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-sm sm:text-base"
             >
               {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
               {isPlaying ? 'Pause' : 'Play'}
@@ -395,7 +395,7 @@ export default function LessonSystem({
             {currentStep < lessonSteps.length - 1 ? (
               <Button
                 onClick={handleNext}
-                className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2"
+                className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2 text-sm sm:text-base"
               >
                 Next Step
                 <SkipForward className="h-4 w-4" />

@@ -42,10 +42,10 @@ export default function LearningDashboard({ userName, onBack, onNavigate }) {
     >
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
           <div>
             <motion.h1 
-              className="text-3xl font-bold text-gray-900 dark:text-white mb-2"
+              className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.1 }}
@@ -53,7 +53,7 @@ export default function LearningDashboard({ userName, onBack, onNavigate }) {
               Learning Dashboard
             </motion.h1>
             <motion.p 
-              className="text-lg text-gray-600 dark:text-gray-300"
+              className="text-base sm:text-lg text-gray-600 dark:text-gray-300"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -69,7 +69,7 @@ export default function LearningDashboard({ userName, onBack, onNavigate }) {
             <Button 
               variant="outline" 
               onClick={onBack}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-sm sm:text-base"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to Chat
@@ -79,64 +79,64 @@ export default function LearningDashboard({ userName, onBack, onNavigate }) {
 
         {/* Stats Grid */}
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+          className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 mb-8"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
           <motion.div 
-            className="bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-xl text-white"
+            className="bg-gradient-to-br from-blue-500 to-blue-600 p-3 sm:p-6 rounded-xl text-white"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-100 text-sm font-medium">Total Sessions</p>
-                <p className="text-3xl font-bold">{learningStats.totalSessions}</p>
+                <p className="text-blue-100 text-xs sm:text-sm font-medium">Total Sessions</p>
+                <p className="text-xl sm:text-3xl font-bold">{learningStats.totalSessions}</p>
               </div>
-              <BookOpen className="h-8 w-8 text-blue-200" />
+              <BookOpen className="h-6 w-6 sm:h-8 sm:w-8 text-blue-200" />
             </div>
           </motion.div>
 
           <motion.div 
-            className="bg-gradient-to-br from-green-500 to-green-600 p-6 rounded-xl text-white"
+            className="bg-gradient-to-br from-green-500 to-green-600 p-3 sm:p-6 rounded-xl text-white"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-green-100 text-sm font-medium">Study Time</p>
-                <p className="text-3xl font-bold">{learningStats.totalTime}m</p>
+                <p className="text-green-100 text-xs sm:text-sm font-medium">Study Time</p>
+                <p className="text-xl sm:text-3xl font-bold">{learningStats.totalTime}m</p>
               </div>
-              <Clock className="h-8 w-8 text-green-200" />
+              <Clock className="h-6 w-6 sm:h-8 sm:w-8 text-green-200" />
             </div>
           </motion.div>
 
           <motion.div 
-            className="bg-gradient-to-br from-yellow-500 to-yellow-600 p-6 rounded-xl text-white"
+            className="bg-gradient-to-br from-yellow-500 to-yellow-600 p-3 sm:p-6 rounded-xl text-white"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-yellow-100 text-sm font-medium">Average Score</p>
-                <p className="text-3xl font-bold">{learningStats.averageScore}%</p>
+                <p className="text-yellow-100 text-xs sm:text-sm font-medium">Average Score</p>
+                <p className="text-xl sm:text-3xl font-bold">{learningStats.averageScore}%</p>
               </div>
-              <Star className="h-8 w-8 text-yellow-200" />
+              <Star className="h-6 w-6 sm:h-8 sm:w-8 text-yellow-200" />
             </div>
           </motion.div>
 
           <motion.div 
-            className="bg-gradient-to-br from-purple-500 to-purple-600 p-6 rounded-xl text-white"
+            className="bg-gradient-to-br from-purple-500 to-purple-600 p-3 sm:p-6 rounded-xl text-white"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-purple-100 text-sm font-medium">Day Streak</p>
-                <p className="text-3xl font-bold">{learningStats.streakDays}</p>
+                <p className="text-purple-100 text-xs sm:text-sm font-medium">Day Streak</p>
+                <p className="text-xl sm:text-3xl font-bold">{learningStats.streakDays}</p>
               </div>
-              <Trophy className="h-8 w-8 text-purple-200" />
+              <Trophy className="h-6 w-6 sm:h-8 sm:w-8 text-purple-200" />
             </div>
           </motion.div>
         </motion.div>
@@ -148,12 +148,12 @@ export default function LearningDashboard({ userName, onBack, onNavigate }) {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 gap-3 sm:gap-4">
             {quickActions.map((action, index) => (
               <motion.div
                 key={action.id}
-                className={`${action.color} p-6 rounded-xl text-white cursor-pointer`}
+                className={`${action.color} p-3 sm:p-6 rounded-xl text-white cursor-pointer`}
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 initial={{ opacity: 0, y: 20 }}
@@ -162,8 +162,8 @@ export default function LearningDashboard({ userName, onBack, onNavigate }) {
                 onClick={() => onNavigate && onNavigate('tutors')}
               >
                 <div className="text-center">
-                  <div className="text-3xl mb-2">{action.icon}</div>
-                  <p className="font-semibold">{action.title}</p>
+                  <div className="text-2xl sm:text-3xl mb-1 sm:mb-2">{action.icon}</div>
+                  <p className="font-semibold text-sm sm:text-base">{action.title}</p>
                 </div>
               </motion.div>
             ))}
@@ -177,7 +177,7 @@ export default function LearningDashboard({ userName, onBack, onNavigate }) {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6 }}
         >
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Recent Activities</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4">Recent Activities</h2>
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
             {recentActivities.map((activity, index) => (
               <motion.div
