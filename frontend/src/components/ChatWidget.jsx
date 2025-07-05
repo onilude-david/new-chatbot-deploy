@@ -308,15 +308,15 @@ export default function ChatWidget({
   };
 
   return (
-    <Card className="w-full max-w-xs sm:max-w-md md:max-w-2xl h-screen flex flex-col md:h-[85vh] md:max-h-[900px] md:rounded-3xl md:shadow-2xl bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 border-0 overflow-hidden">
-      <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-5 border-b border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white/90 to-blue-50/90 dark:from-gray-900/90 dark:to-gray-800/90 backdrop-blur-md rounded-t-3xl">
+    <Card className="w-full max-w-xs sm:max-w-md md:max-w-2xl h-[calc(100vh-4rem)] flex flex-col md:h-[calc(85vh-4rem)] md:max-h-[900px] md:rounded-3xl md:shadow-2xl bg-white dark:bg-gray-900 border-0 overflow-hidden">
+      <CardHeader className="flex flex-row items-center justify-between p-3 sm:p-5 border-b border-gray-200 dark:border-gray-700 bg-blue-50 dark:bg-gray-800 rounded-t-3xl">
         <div className="flex items-center space-x-3 sm:space-x-4">
-          <Button variant="ghost" size="icon" onClick={() => onBack()} className="hover:bg-blue-100/80 dark:hover:bg-gray-800/80 rounded-full transition-all duration-200">
+          <Button variant="ghost" size="icon" onClick={() => onBack()} className="hover:bg-blue-100 dark:hover:bg-gray-800 rounded-full transition-all duration-200">
             <ArrowLeft className="h-5 w-5" />
           </Button>
           <div className="text-3xl sm:text-4xl drop-shadow-lg">{character.emoji}</div>
           <div>
-            <CardTitle className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-200 bg-clip-text text-transparent">{character.name}</CardTitle>
+            <CardTitle className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">{character.name}</CardTitle>
             <div className="text-xs text-gray-500 dark:text-gray-400 font-medium">{character.subject} Tutor</div>
           </div>
         </div>
@@ -330,7 +330,7 @@ export default function ChatWidget({
               size="icon" 
               onClick={() => setShowLearningPath(true)}
               title="Learning Path" 
-              className="hover:bg-indigo-100/80 dark:hover:bg-indigo-800/80 rounded-full transition-all duration-200"
+              className="hover:bg-indigo-100 dark:hover:bg-indigo-800 rounded-full transition-all duration-200"
             >
               <Target className="h-5 w-5 text-indigo-600" />
             </Button>
@@ -342,7 +342,7 @@ export default function ChatWidget({
               size="icon" 
               onClick={() => setShowProgressDashboard(true)}
               title="Progress Dashboard" 
-              className="hover:bg-blue-100/80 dark:hover:bg-blue-800/80 rounded-full transition-all duration-200"
+              className="hover:bg-blue-100 dark:hover:bg-blue-800 rounded-full transition-all duration-200"
             >
               <BarChart3 className="h-5 w-5 text-blue-600" />
             </Button>
@@ -354,7 +354,7 @@ export default function ChatWidget({
               size="icon" 
               onClick={() => setShowSoundManager(true)}
               title="Sound Settings" 
-              className="hover:bg-yellow-100/80 dark:hover:bg-yellow-800/80 rounded-full transition-all duration-200"
+              className="hover:bg-yellow-100 dark:hover:bg-yellow-800 rounded-full transition-all duration-200"
             >
               <Music className="h-5 w-5 text-yellow-600" />
             </Button>
@@ -366,7 +366,7 @@ export default function ChatWidget({
               size="icon" 
               onClick={() => setShowFlashcards(true)}
               title="Create Flashcards" 
-              className="hover:bg-pink-100/80 dark:hover:bg-pink-800/80 rounded-full transition-all duration-200"
+              className="hover:bg-pink-100 dark:hover:bg-pink-800 rounded-full transition-all duration-200"
             >
               <BookOpen className="h-5 w-5 text-pink-600" />
             </Button>
@@ -378,7 +378,7 @@ export default function ChatWidget({
               size="icon" 
               onClick={() => setShowAdvancedGames(true)}
               title="Learning Games" 
-              className="hover:bg-purple-100/80 dark:hover:bg-purple-800/80 rounded-full transition-all duration-200"
+              className="hover:bg-purple-100 dark:hover:bg-purple-800 rounded-full transition-all duration-200"
             >
               <Gamepad2 className="h-5 w-5 text-purple-600" />
             </Button>
@@ -392,7 +392,7 @@ export default function ChatWidget({
                 size="icon" 
                 onClick={() => setShowStorybookStore(true)}
                 title="Browse Stories" 
-                className="hover:bg-orange-100/80 dark:hover:bg-orange-800/80 rounded-full transition-all duration-200"
+                className="hover:bg-orange-100 dark:hover:bg-orange-800 rounded-full transition-all duration-200"
               >
                 <span className="text-xl">📚</span>
               </Button>
@@ -405,7 +405,7 @@ export default function ChatWidget({
               size="icon" 
               onClick={() => setShowStudyTimer(true)}
               title="Study Timer" 
-              className="hover:bg-green-100/80 dark:hover:bg-green-800/80 rounded-full transition-all duration-200"
+              className="hover:bg-green-100 dark:hover:bg-green-800 rounded-full transition-all duration-200"
             >
               <Timer className="h-5 w-5 text-green-600" />
             </Button>
@@ -414,11 +414,11 @@ export default function ChatWidget({
           {/* Mobile: Dropdown menu for all features */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" title="More Features" className="sm:hidden hover:bg-gray-100/80 dark:hover:bg-gray-800/80 rounded-full transition-all duration-200">
+              <Button variant="ghost" size="icon" title="More Features" className="sm:hidden hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-all duration-200">
                 <MoreHorizontal className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50">
+            <DropdownMenuContent className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
               <DropdownMenuItem onClick={() => setShowLearningPath(true)} className="hover:bg-indigo-50 dark:hover:bg-indigo-700 transition-colors duration-200">
                 <Target className="h-4 w-4 mr-2 text-indigo-600" />
                 Learning Path
@@ -455,11 +455,11 @@ export default function ChatWidget({
           {/* Always visible buttons */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" title="Past Assignments" className="hover:bg-blue-100/80 dark:hover:bg-gray-800/80 rounded-full transition-all duration-200">
+              <Button variant="ghost" size="icon" title="Past Assignments" className="hover:bg-blue-100 dark:hover:bg-gray-800 rounded-full transition-all duration-200">
                 <History className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50">
+            <DropdownMenuContent className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
               {sessions.map(session => (
                 <DropdownMenuItem key={session.id} onSelect={() => setActiveSessionId(session.id)} className="hover:bg-blue-50 dark:hover:bg-gray-700 transition-colors duration-200">
                   Assignment from {new Date(session.id).toLocaleString()}
@@ -467,7 +467,7 @@ export default function ChatWidget({
               ))}
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="ghost" size="icon" onClick={handleNewChat} title="New Assignment" className="hover:bg-blue-100/80 dark:hover:bg-gray-800/80 rounded-full transition-all duration-200">
+          <Button variant="ghost" size="icon" onClick={handleNewChat} title="New Assignment" className="hover:bg-blue-100 dark:hover:bg-gray-800 rounded-full transition-all duration-200">
             <PlusCircle className="h-5 w-5" />
           </Button>
         </div>
@@ -475,7 +475,7 @@ export default function ChatWidget({
       
 
 
-      <CardContent className="flex-1 overflow-y-auto p-2 sm:p-3 md:p-5 space-y-3 sm:space-y-4 bg-gradient-to-b from-transparent to-blue-50/20 dark:to-gray-800/20">
+      <CardContent className="flex-1 overflow-y-auto p-2 sm:p-3 md:p-5 space-y-3 sm:space-y-4 bg-gray-50 dark:bg-gray-900">
         <AnimatePresence>
           {activeSession?.messages.map((msg, i) => {
             const showDateSeparator = i > 0 &&
@@ -490,7 +490,7 @@ export default function ChatWidget({
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.4 }}
                   >
-                    <div className="bg-gradient-to-r from-blue-100 to-purple-100 dark:from-gray-700 dark:to-gray-600 px-4 py-2 rounded-full text-xs text-blue-700 dark:text-gray-200 font-medium shadow-sm border border-blue-200/50 dark:border-gray-600/50">
+                    <div className="bg-blue-100 dark:bg-gray-700 px-4 py-2 rounded-full text-xs text-blue-700 dark:text-gray-200 font-medium shadow-sm border border-blue-200 dark:border-gray-600">
                       {new Date(msg.timestamp || Date.now()).toLocaleDateString()}
                     </div>
                   </motion.div>
@@ -510,19 +510,19 @@ export default function ChatWidget({
         </AnimatePresence>
         <div ref={messagesEndRef} />
       </CardContent>
-      <CardFooter className="p-2 sm:p-3 md:p-5 border-t border-gray-200/50 dark:border-gray-700/50 bg-gradient-to-r from-white/90 to-blue-50/90 dark:from-gray-900/90 dark:to-gray-800/90 backdrop-blur-md rounded-b-3xl">
+      <CardFooter className="p-2 sm:p-3 md:p-5 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-b-3xl">
         <div className="flex flex-col w-full">
           {/* Improved File Preview */}
           {file && (
             <motion.div 
-              className="mb-3 p-3 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-xl flex items-center justify-between text-sm border border-blue-200/50 dark:border-blue-700/50 shadow-sm"
+              className="mb-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-between text-sm border border-blue-200 dark:border-blue-700 shadow-sm"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
             >
               <span className="truncate pr-2 text-blue-800 dark:text-blue-200 font-medium">Attaching: {file.name}</span>
-              <Button variant="ghost" size="icon" className="h-6 w-6 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-800/50 rounded-full transition-all duration-200" onClick={() => setFile(null)}>
+              <Button variant="ghost" size="icon" className="h-6 w-6 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-800 rounded-full transition-all duration-200" onClick={() => setFile(null)}>
                 <X className="h-4 w-4" />
               </Button>
             </motion.div>
@@ -540,7 +540,7 @@ export default function ChatWidget({
               size="icon" 
               onClick={() => fileInputRef.current.click()}
               title="Attach file"
-              className="shrink-0 h-10 w-10 sm:h-12 sm:w-12 hover:bg-blue-100/80 dark:hover:bg-gray-800/80 rounded-full transition-all duration-200"
+              className="shrink-0 h-10 w-10 sm:h-12 sm:w-12 hover:bg-blue-100 dark:hover:bg-gray-800 rounded-full transition-all duration-200"
             >
               <Paperclip className="h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
@@ -559,7 +559,7 @@ export default function ChatWidget({
                 sendMessage();
               }} 
               disabled={loading || (!input.trim() && !file)} 
-              className="shrink-0 h-10 px-3 sm:h-12 sm:px-4 text-sm sm:text-base bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white font-semibold hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none disabled:opacity-50"
+              className="shrink-0 h-10 px-3 sm:h-12 sm:px-4 text-sm sm:text-base bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-all duration-300 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none disabled:opacity-50"
             >
               Send
             </Button>

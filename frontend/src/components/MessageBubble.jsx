@@ -24,7 +24,7 @@ export default function MessageBubble({ from, text, character, onSwitchCharacter
         >
           <Button 
             variant="outline" 
-            className="mt-2 mr-2 text-sm py-2 px-4 h-auto bg-gradient-to-r from-pink-50 to-yellow-50 hover:from-pink-100 hover:to-yellow-100 border-pink-200 hover:border-pink-300 text-pink-700 hover:text-pink-800 dark:from-purple-700 dark:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600 dark:border-pink-500 dark:hover:border-pink-400 dark:text-pink-200 dark:hover:text-white transition-all duration-200 shadow-sm hover:shadow-md"
+            className="mt-2 mr-2 text-sm py-2 px-4 h-auto bg-pink-100 hover:bg-pink-200 border-pink-200 hover:border-pink-300 text-pink-700 hover:text-pink-800 dark:bg-purple-700 dark:hover:bg-purple-600 dark:border-pink-500 dark:hover:border-pink-400 dark:text-pink-200 dark:hover:text-white transition-all duration-200 shadow-sm hover:shadow-md"
             onClick={() => onSwitchCharacter && onSwitchCharacter(characterId)}
           >
             Switch to this character
@@ -46,8 +46,8 @@ export default function MessageBubble({ from, text, character, onSwitchCharacter
         <motion.div 
           className={`flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-lg
             ${from === "user" 
-              ? "bg-gradient-to-br from-pink-500 to-purple-500 text-white ml-2 sm:ml-3 ring-2 ring-pink-200 dark:ring-pink-800" 
-              : "bg-gradient-to-br from-yellow-400 to-orange-400 text-gray-800 mr-2 sm:mr-3 ring-2 ring-yellow-200 dark:ring-yellow-800"
+              ? "bg-pink-500 text-white ml-2 sm:ml-3 ring-2 ring-pink-200 dark:ring-pink-800" 
+              : "bg-yellow-400 text-gray-800 mr-2 sm:mr-3 ring-2 ring-yellow-200 dark:ring-yellow-800"
             }`}
           whileHover={{ scale: 1.1 }}
           transition={{ duration: 0.2 }}
@@ -64,8 +64,8 @@ export default function MessageBubble({ from, text, character, onSwitchCharacter
           className={`
             px-4 py-3 sm:px-6 sm:py-5 rounded-3xl shadow-lg backdrop-blur-sm
             ${from === "user"
-              ? "bg-gradient-to-br from-pink-500 to-purple-500 text-white rounded-br-md shadow-pink-500/25"
-              : "bg-gradient-to-br from-white to-yellow-50 dark:from-purple-800 dark:to-pink-800 text-gray-800 dark:text-white border-2 border-yellow-200/50 dark:border-pink-500/50 rounded-bl-md shadow-yellow-500/10"
+              ? "bg-pink-500 text-white rounded-br-md shadow-pink-500/25"
+              : "bg-white dark:bg-purple-800 text-gray-800 dark:text-white border-2 border-yellow-200 dark:border-pink-500 rounded-bl-md shadow-yellow-500/10"
             }
           `}
           whileHover={{ scale: 1.02 }}
@@ -80,7 +80,7 @@ export default function MessageBubble({ from, text, character, onSwitchCharacter
               transition={{ duration: 0.3 }}
             >
               <span className="text-lg">{character.emoji}</span>
-              <span className="bg-gradient-to-r from-pink-600 to-orange-600 bg-clip-text text-transparent">{character.name}</span>
+              <span className="text-pink-600">{character.name}</span>
             </motion.div>
           )}
           <motion.div 
@@ -133,7 +133,7 @@ export default function MessageBubble({ from, text, character, onSwitchCharacter
           </motion.div>
           {fileName && (
             <motion.div 
-              className="mt-4 p-4 bg-yellow-100/80 dark:bg-pink-700/80 rounded-2xl text-sm flex items-center gap-3 border-2 border-yellow-200/50 dark:border-pink-600/50"
+              className="mt-4 p-4 bg-yellow-100 dark:bg-pink-700 rounded-2xl text-sm flex items-center gap-3 border-2 border-yellow-200 dark:border-pink-600"
               initial={{ opacity: 0, scale: 0.9, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}

@@ -19,14 +19,14 @@ export default function WelcomeScreen({ onNameSubmit }) {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="flex items-center justify-center min-h-screen p-4 bg-gradient-to-br from-pink-100 via-yellow-100 to-blue-100 dark:from-purple-900 dark:via-indigo-900 dark:to-pink-900"
+      className="flex items-center justify-center h-[calc(100vh-4rem)] w-full p-4 bg-white dark:bg-gray-900"
     >
       <motion.div
         initial={{ y: 30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.8 }}
       >
-        <Card className="w-full max-w-md mx-auto shadow-2xl border-0 bg-gradient-to-br from-white via-pink-50/50 to-yellow-50/50 dark:from-purple-800 dark:via-pink-800 dark:to-orange-800 rounded-3xl overflow-hidden backdrop-blur-sm">
+        <Card className="w-full max-w-md mx-auto shadow-2xl border-0 bg-white dark:bg-gray-800 rounded-3xl overflow-hidden">
           <form onSubmit={handleSubmit}>
             <CardHeader className="text-center space-y-4 pb-6 pt-8">
               <motion.div
@@ -77,7 +77,7 @@ export default function WelcomeScreen({ onNameSubmit }) {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.8, duration: 0.6 }}
               >
-                <CardTitle className="text-3xl font-bold bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-500 bg-clip-text text-transparent mb-2">
+                <CardTitle className="text-3xl font-bold text-blue-600 dark:text-blue-400 mb-2">
                   Welcome To Lanter's Homework Helper! 🎉
                 </CardTitle>
                 <CardDescription className="text-base text-gray-700 dark:text-gray-200 font-medium">
@@ -110,7 +110,7 @@ export default function WelcomeScreen({ onNameSubmit }) {
               >
                 <Button 
                   type="submit" 
-                  className="w-full py-4 text-lg font-semibold bg-gradient-to-r from-pink-500 via-orange-500 to-yellow-500 hover:from-pink-600 hover:via-orange-600 hover:to-yellow-600 transition-all duration-300 transform hover:scale-105 rounded-xl shadow-lg hover:shadow-xl"
+                  className="w-full py-4 text-lg font-semibold bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 rounded-xl shadow-lg hover:shadow-xl text-white"
                 >
                   Let's Go! 🚀
                 </Button>

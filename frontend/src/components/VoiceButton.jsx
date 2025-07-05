@@ -30,8 +30,8 @@ export default function VoiceButton({ text, character, className }) {
         title={isPlaying ? "Stop voice" : "Play voice"}
         className={`transition-all duration-300 rounded-full ${
           isPlaying
-            ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-lg hover:shadow-xl hover:from-pink-600 hover:to-purple-600 border-2 border-pink-300"
-            : "bg-gradient-to-r from-pink-50 to-yellow-50 hover:from-pink-100 hover:to-yellow-100 text-pink-600 hover:text-pink-700 border-2 border-pink-200 hover:border-pink-300 dark:from-purple-700 dark:to-pink-700 dark:hover:from-purple-600 dark:hover:to-pink-600 dark:border-pink-500 dark:hover:border-pink-400 dark:text-pink-200 dark:hover:text-white shadow-sm hover:shadow-md"
+            ? "bg-pink-500 text-white shadow-lg hover:shadow-xl hover:bg-pink-600 border-2 border-pink-300"
+            : "bg-pink-100 hover:bg-pink-200 text-pink-600 hover:text-pink-700 border-2 border-pink-200 hover:border-pink-300 dark:bg-purple-700 dark:hover:bg-purple-600 dark:border-pink-500 dark:hover:border-pink-400 dark:text-pink-200 dark:hover:text-white shadow-sm hover:shadow-md"
         } ${className || ""}`}
       >
         <motion.div
