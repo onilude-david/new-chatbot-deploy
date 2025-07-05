@@ -120,10 +120,10 @@ export default function Settings({
     >
       <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
           <div>
             <motion.h1 
-              className="text-3xl font-bold text-gray-900 dark:text-white mb-2"
+              className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-2"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.1 }}
@@ -131,7 +131,7 @@ export default function Settings({
               Settings
             </motion.h1>
             <motion.p 
-              className="text-lg text-gray-600 dark:text-gray-300"
+              className="text-base sm:text-lg text-gray-600 dark:text-gray-300"
               initial={{ x: -20, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
@@ -148,14 +148,14 @@ export default function Settings({
             <Button 
               variant="outline" 
               onClick={onBack}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-sm sm:text-base"
             >
               <ArrowLeft className="h-4 w-4" />
               Back
             </Button>
             <Button 
               onClick={handleSave}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700"
+              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-sm sm:text-base"
             >
               <Save className="h-4 w-4" />
               Save
@@ -166,17 +166,17 @@ export default function Settings({
         {/* Save Message */}
         {showSaveMessage && (
           <motion.div
-            className="fixed top-24 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2"
+            className="fixed top-24 left-4 right-4 sm:left-auto sm:right-4 bg-green-500 text-white px-4 sm:px-6 py-3 rounded-lg shadow-lg z-50 flex items-center gap-2"
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 100 }}
           >
-            <span>✓ Settings saved!</span>
+            <span className="text-sm sm:text-base">✓ Settings saved!</span>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setShowSaveMessage(false)}
-              className="text-white hover:text-white/80"
+              className="text-white hover:text-white/80 ml-auto"
             >
               <X className="h-4 w-4" />
             </Button>
@@ -185,7 +185,7 @@ export default function Settings({
 
         {/* Tabs */}
         <motion.div 
-          className="flex space-x-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg mb-8"
+          className="flex flex-wrap gap-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-lg mb-8"
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
@@ -196,14 +196,14 @@ export default function Settings({
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-all flex-1 sm:flex-none min-w-0 ${
                   activeTab === tab.id
                     ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-sm'
                     : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                 }`}
               >
-                <Icon className="h-4 w-4" />
-                {tab.label}
+                <Icon className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
+                <span className="truncate">{tab.label}</span>
               </button>
             );
           })}
@@ -215,7 +215,7 @@ export default function Settings({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6"
+          className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sm:p-6"
         >
           {activeTab === 'profile' && (
             <div className="space-y-6">
