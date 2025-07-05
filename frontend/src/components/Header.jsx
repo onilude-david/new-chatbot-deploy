@@ -17,17 +17,17 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
         <div className="flex items-center justify-between h-16">
           {/* Logo and Brand */}
           <motion.div 
-            className="flex items-center space-x-3"
+            className="flex items-center space-x-2 sm:space-x-3"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.2 }}
           >
-            <div className="text-3xl drop-shadow-lg">🎓</div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+            <div className="text-2xl sm:text-3xl drop-shadow-lg">🎓</div>
+            <div className="min-w-0 flex-1">
+              <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white truncate">
                 Lantern's Homework Helper
               </h1>
               {userName && (
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 truncate">
                   Welcome back, {userName}! 👋
                 </p>
               )}
@@ -98,7 +98,7 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
           </nav>
 
           {/* Right side - Theme toggle, settings, and mobile menu */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-3">
             {/* Theme Toggle */}
             <motion.div
               whileHover={{ scale: 1.1 }}
@@ -109,10 +109,10 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
                 variant="ghost"
                 size="icon"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="h-9 w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
-                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <Sun className="h-[1rem] w-[1rem] sm:h-[1.2rem] sm:w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1rem] w-[1rem] sm:h-[1.2rem] sm:w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
               </Button>
             </motion.div>
@@ -127,7 +127,7 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
                 variant="ghost"
                 size="icon"
                 onClick={() => onNavigate && onNavigate('settings')}
-                className="h-9 w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 <Settings className="h-4 w-4" />
                 <span className="sr-only">Settings</span>
@@ -145,7 +145,7 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
                 variant="ghost"
                 size="icon"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="h-9 w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
                 <span className="sr-only">Toggle menu</span>
@@ -158,24 +158,24 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
         <AnimatePresence>
           {mobileMenuOpen && (
           <motion.div 
-            className="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md"
+            className="md:hidden border-t border-gray-200 dark:border-gray-700 bg-white/95 dark:bg-gray-900/95 backdrop-blur-md overflow-hidden"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            <div className="px-4 py-4 space-y-3">
+            <div className="px-4 py-4 space-y-2 sm:space-y-3">
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="w-full justify-start text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                  className="w-full justify-start text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 h-10 sm:h-9"
                   onClick={() => {
                     onNavigate && onNavigate('home');
                     setMobileMenuOpen(false);
                   }}
                 >
-                  <Home className="h-4 w-4 mr-3" />
+                  <Home className="h-4 w-4 mr-2 sm:mr-3" />
                   Home
                 </Button>
               </motion.div>
@@ -184,13 +184,13 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="w-full justify-start text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                  className="w-full justify-start text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 h-10 sm:h-9"
                   onClick={() => {
                     onNavigate && onNavigate('learning');
                     setMobileMenuOpen(false);
                   }}
                 >
-                  <BookOpen className="h-4 w-4 mr-3" />
+                  <BookOpen className="h-4 w-4 mr-2 sm:mr-3" />
                   Learning
                 </Button>
               </motion.div>
@@ -199,13 +199,13 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="w-full justify-start text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                  className="w-full justify-start text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 h-10 sm:h-9"
                   onClick={() => {
                     onNavigate && onNavigate('curriculum');
                     setMobileMenuOpen(false);
                   }}
                 >
-                  <BookOpen className="h-4 w-4 mr-3" />
+                  <BookOpen className="h-4 w-4 mr-2 sm:mr-3" />
                   Curriculum
                 </Button>
               </motion.div>
@@ -214,13 +214,13 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="w-full justify-start text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                  className="w-full justify-start text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 h-10 sm:h-9"
                   onClick={() => {
                     onNavigate && onNavigate('search');
                     setMobileMenuOpen(false);
                   }}
                 >
-                  <Search className="h-4 w-4 mr-3" />
+                  <Search className="h-4 w-4 mr-2 sm:mr-3" />
                   Search
                 </Button>
               </motion.div>
@@ -229,13 +229,13 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="w-full justify-start text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400"
+                  className="w-full justify-start text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 h-10 sm:h-9"
                   onClick={() => {
                     onNavigate && onNavigate('tutors');
                     setMobileMenuOpen(false);
                   }}
                 >
-                  <Users className="h-4 w-4 mr-3" />
+                  <Users className="h-4 w-4 mr-2 sm:mr-3" />
                   Tutors
                 </Button>
               </motion.div>
