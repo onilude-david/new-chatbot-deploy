@@ -17,12 +17,12 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
         <div className="flex items-center justify-between h-16">
           {/* Logo and Brand */}
           <motion.div 
-            className="flex items-center space-x-2 sm:space-x-3"
+            className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0"
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.2 }}
           >
             <div className="text-2xl sm:text-3xl drop-shadow-lg">🎓</div>
-            <div className="min-w-0 flex-1">
+            <div className="min-w-0 hidden sm:block">
               <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white truncate">
                 Lantern's Homework Helper
               </h1>
@@ -31,6 +31,11 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
                   Welcome back, {userName}! 👋
                 </p>
               )}
+            </div>
+            <div className="sm:hidden">
+              <h1 className="text-sm font-bold text-gray-900 dark:text-white">
+                Lantern
+              </h1>
             </div>
           </motion.div>
 
@@ -98,7 +103,7 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
           </nav>
 
           {/* Right side - Theme toggle, settings, and mobile menu */}
-          <div className="flex items-center space-x-2 sm:space-x-3">
+          <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-3 flex-shrink-0">
             {/* Theme Toggle */}
             <motion.div
               whileHover={{ scale: 1.1 }}
@@ -109,10 +114,10 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
                 variant="ghost"
                 size="icon"
                 onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
-                <Sun className="h-[1rem] w-[1rem] sm:h-[1.2rem] sm:w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-[1rem] w-[1rem] sm:h-[1.2rem] sm:w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <Sun className="h-[0.875rem] w-[0.875rem] sm:h-[1rem] sm:w-[1rem] md:h-[1.2rem] md:w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[0.875rem] w-[0.875rem] sm:h-[1rem] sm:w-[1rem] md:h-[1.2rem] md:w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                 <span className="sr-only">Toggle theme</span>
               </Button>
             </motion.div>
@@ -127,7 +132,7 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
                 variant="ghost"
                 size="icon"
                 onClick={() => onNavigate && onNavigate('settings')}
-                className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 <Settings className="h-4 w-4" />
                 <span className="sr-only">Settings</span>
@@ -145,7 +150,7 @@ export default function Header({ theme, setTheme, userName, onNavigate }) {
                 variant="ghost"
                 size="icon"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="h-8 w-8 sm:h-9 sm:w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
+                className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700"
               >
                 {mobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
                 <span className="sr-only">Toggle menu</span>
